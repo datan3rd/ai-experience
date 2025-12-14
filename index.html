@@ -1,200 +1,258 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#070A12" />
-  <title>AI Reality Check</title>
-  <meta name="description" content="A 2‑minute diagnostic for leaders shipping AI agents into real workflows." />
+  <title>AI Reality Check → Brief Chat</title>
+  <meta name="description" content="A simple, premium walkthrough that leads naturally into a brief meeting." />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,550;9..144,700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./styles.css" />
 </head>
-
 <body>
+  <!-- Ambient background -->
   <div class="bg" aria-hidden="true">
-    <div class="bg-mesh"></div>
-    <div class="bg-noise"></div>
-    <div class="bg-vignette"></div>
+    <div class="mesh"></div>
+    <div class="noise"></div>
+    <div class="vignette"></div>
   </div>
 
-  <main class="shell">
-    <header class="topbar">
-      <button class="brand" id="homeBtn" aria-label="Go to start">
-        <span class="mark" aria-hidden="true"></span>
-        <span class="brandText">
-          <span class="brandTitle">AI Reality Check</span>
-          <span class="brandSub">Built for leaders. Written for humans.</span>
-        </span>
-      </button>
+  <!-- Cursor accent -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursorDot"></div>
+    <div class="cursorRing"></div>
+  </div>
 
-      <nav class="actions" aria-label="Top actions">
-        <button class="pill" id="toggleSound" type="button" aria-pressed="false">
-          <span class="pillDot" aria-hidden="true"></span>
-          <span id="soundLabel">Sound: Off</span>
-        </button>
+  <header class="top">
+    <div class="brand" id="toTop" role="button" tabindex="0" aria-label="Restart">
+      <span class="mark" aria-hidden="true"></span>
+      <div class="brandText">
+        <div class="brandTitle">AI Reality Check</div>
+        <div class="brandSub">A short walkthrough. Zero fluff.</div>
+      </div>
+    </div>
 
-        <a class="pill pillPrimary" href="https://tidycal.com/jasonfishbein/briefchat" target="_blank" rel="noopener noreferrer">
-          Book a brief chat <span class="arrow" aria-hidden="true">→</span>
-        </a>
-      </nav>
-    </header>
+    <div class="topRight">
+      <div class="progress">
+        <div class="track"><div class="fill" id="fill"></div></div>
+        <div class="pMeta"><span id="pText">0%</span></div>
+      </div>
 
-    <section class="card" id="app" aria-live="polite">
-      <section class="view" id="introView">
-        <div class="hero">
-          <div class="chips">
-            <span class="chip">2 minutes</span>
-            <span class="chip">7 questions</span>
-            <span class="chip">No email gate</span>
-            <span class="chip chipHot">High signal</span>
-          </div>
+      <a class="pill" href="https://tidycal.com/jasonfishbein/briefchat" target="_blank" rel="noopener noreferrer">
+        Book a brief chat <span class="arr" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </header>
 
-          <h1 class="h1">
-            Your AI agent doesn’t need to be “smart.”
-            <span class="grad">It needs to be safe.</span>
-          </h1>
+  <main class="wrap" id="wrap">
+    <!-- HERO -->
+    <section class="panel hero" data-panel="hero">
+      <div class="content">
+        <div class="eyebrow">This takes ~90 seconds.</div>
+        <h1>
+          You don’t need a “smarter” agent.
+          <span class="grad">You need a safer one.</span>
+        </h1>
+        <p class="lead">
+          Answer a few quick questions. You’ll get a brutally honest snapshot and a clean next step.
+          No email. No funnel weirdness. Just signal.
+        </p>
 
-          <p class="lead">
-            This is the diagnostic I wish every team ran before showing leadership a demo that
-            <em>“works on my laptop.”</em>
-            Answer honestly and you’ll get an archetype + the one move that changes outcomes fast.
-          </p>
-
-          <div class="ctaRow">
-            <button class="btn btnPrimary" id="startBtn" type="button">
-              Start the check <span class="arrow" aria-hidden="true">→</span>
-            </button>
-            <button class="btn btnGhost" id="peekBtn" type="button">
-              Peek at the questions
-            </button>
-          </div>
-
-          <div class="meta">
-            Keyboard: <kbd>1</kbd>–<kbd>4</kbd> answer • <kbd>Enter</kbd> next • <kbd>Esc</kbd> restart
-          </div>
+        <div class="row">
+          <button class="btn primary" id="start">Start</button>
+          <button class="btn ghost" id="skipToBook">Skip to booking</button>
         </div>
 
-        <div class="featureGrid" role="list">
-          <div class="feature" role="listitem">
-            <div class="featureTitle">What you’ll learn</div>
-            <div class="featureBody">Where your agent is strong… and where it’s quietly creating liability.</div>
-          </div>
-          <div class="feature" role="listitem">
-            <div class="featureTitle">What this avoids</div>
-            <div class="featureBody">Accuracy theater. Vendor decks. “Just fine‑tune it” as a coping mechanism.</div>
-          </div>
-          <div class="feature" role="listitem">
-            <div class="featureTitle">What happens next</div>
-            <div class="featureBody">You get a result and a practical first move. If you want help: book a brief chat.</div>
-          </div>
+        <div class="tiny">
+          Tip: scroll or use your trackpad. Or just click an option. It will guide you.
         </div>
-      </section>
+      </div>
 
-      <section class="view hidden" id="quizView">
-        <div class="quizTop">
-          <div class="progress">
-            <div class="bar" aria-hidden="true"><div class="fill" id="fill"></div></div>
-            <div class="progressMeta">
-              <span id="qCount">Question 1 of 7</span>
-              <span class="dot" aria-hidden="true">•</span>
-              <span id="qHint">Pick the closest truth</span>
-            </div>
+      <div class="aside" aria-hidden="true">
+        <div class="stack">
+          <div class="card">
+            <div class="cardK">What you get</div>
+            <div class="cardT">A diagnosis you can forward internally.</div>
           </div>
-
-          <div class="navBtns">
-            <button class="btn btnGhost" id="backBtn" type="button">← Back</button>
-            <button class="btn btnGhost" id="restartBtn" type="button">Restart</button>
+          <div class="card">
+            <div class="cardK">What you avoid</div>
+            <div class="cardT">Accuracy theater and “it depends” meetings.</div>
           </div>
-        </div>
-
-        <div class="qCard" id="qCard">
-          <div class="qHeader">
-            <div class="qKicker" id="qKicker">Reality Check</div>
-            <div class="qAside" id="qAside"></div>
+          <div class="card">
+            <div class="cardK">What I’m selling</div>
+            <div class="cardT">A 10‑minute call that saves you 10 weeks.</div>
           </div>
-
-          <h2 class="h2" id="qTitle">Title</h2>
-          <p class="sub" id="qSub">Sub</p>
-
-          <div class="options" id="options"></div>
-
-          <div class="qFooter">
-            <div class="hint" id="hintText">Tip: answer fast. Your first instinct is usually the truth.</div>
-            <button class="btn btnPrimary" id="nextBtn" type="button" disabled>
-              Next <span class="arrow" aria-hidden="true">→</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-      </section>
-
-      <section class="view hidden" id="resultsView">
-        <div class="resultsHead">
-          <div class="resultsKicker">Your snapshot</div>
-          <h2 class="h2 big" id="rTitle">You’re in the Prototype Trap</h2>
-          <p class="lead" id="rSub"></p>
-
-          <div class="tags" id="tags"></div>
-        </div>
-
-        <div class="grid">
-          <div class="panel">
-            <div class="panelTitle">What this usually looks like</div>
-            <ul class="list" id="looks"></ul>
-          </div>
-          <div class="panel">
-            <div class="panelTitle">The real risk</div>
-            <ul class="list" id="risk"></ul>
-          </div>
-          <div class="panel panelWide">
-            <div class="panelTitle">The move</div>
-            <div class="panelBody" id="move"></div>
-          </div>
-        </div>
-
-        <div class="divider" aria-hidden="true"></div>
-
-        <div class="ctaCard">
-          <div>
-            <div class="ctaTitle">Want a second opinion in 10 minutes?</div>
-            <div class="ctaBody">
-              Book a brief chat. I’ll tell you what to fix first — and what to stop arguing about in Slack.
-            </div>
-          </div>
-          <div class="ctaBtns">
-            <a class="btn btnPrimary btnWide" id="bookBtn" href="https://tidycal.com/jasonfishbein/briefchat" target="_blank" rel="noopener noreferrer">
-              Book a brief chat <span class="arrow" aria-hidden="true">→</span>
-            </a>
-            <button class="btn btnGhost btnWide" id="copyBtn" type="button">Copy results link</button>
-            <button class="btn btnGhost btnWide" id="againBtn" type="button">Run it again</button>
-          </div>
-        </div>
-
-        <div class="meta">
-          Pro tip: share this internally. If it sparks debate, that’s a feature — not a bug.
-        </div>
-      </section>
-
-      <div class="modal hidden" id="modal">
-        <div class="backdrop" id="backdrop"></div>
-        <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-          <div class="modalHead">
-            <div class="modalTitle" id="modalTitle">What you’ll be asked</div>
-            <button class="icon" id="closeModal" type="button" aria-label="Close">✕</button>
-          </div>
-          <div class="modalBody" id="modalBody"></div>
         </div>
       </div>
     </section>
 
-    <footer class="footer">
-      <span class="muted">GitHub Pages • No tracking • No email gate</span>
-      <span class="muted">© <span id="year"></span> Jason Fishbein</span>
+    <!-- QUESTIONS (minimal, Cuberto-ish blocks) -->
+    <section class="panel q" data-panel="q1" data-q="q1">
+      <div class="content">
+        <div class="eyebrow">Question 1</div>
+        <h2>Why are you building an agent right now?</h2>
+        <p class="lead">Pick the closest truth. The UI won’t judge. (It will.)</p>
+
+        <div class="choices">
+          <button class="choice" data-q="q1" data-a="pressure">
+            <span class="cTitle">Leadership pressure</span>
+            <span class="cSub">“We need something agentic… by Monday.”</span>
+          </button>
+          <button class="choice" data-q="q1" data-a="efficiency">
+            <span class="cTitle">Efficiency</span>
+            <span class="cSub">Less manual work. More throughput. Less pain.</span>
+          </button>
+          <button class="choice" data-q="q1" data-a="cx">
+            <span class="cTitle">Customer experience</span>
+            <span class="cSub">Faster answers without the support bonfire.</span>
+          </button>
+          <button class="choice" data-q="q1" data-a="fear">
+            <span class="cTitle">Competitive fear</span>
+            <span class="cSub">If we don’t, someone else will… loudly.</span>
+          </button>
+        </div>
+      </div>
+      <div class="ghostline" aria-hidden="true">Keep it simple. Make it safe. Ship it.</div>
+    </section>
+
+    <section class="panel q" data-panel="q2" data-q="q2">
+      <div class="content">
+        <div class="eyebrow">Question 2</div>
+        <h2>What happens when the agent is missing data?</h2>
+        <p class="lead">The model will either ask… or improvise. Choose wisely.</p>
+
+        <div class="choices">
+          <button class="choice" data-q="q2" data-a="failClosed">
+            <span class="cTitle">It stops</span>
+            <span class="cSub">Fail‑closed. No guesses. No chaos.</span>
+          </button>
+          <button class="choice" data-q="q2" data-a="clarify">
+            <span class="cTitle">It asks</span>
+            <span class="cSub">“I need X to answer.” Like a sane coworker.</span>
+          </button>
+          <button class="choice" data-q="q2" data-a="escalate">
+            <span class="cTitle">It escalates</span>
+            <span class="cSub">Routes to a human when it’s uncertain.</span>
+          </button>
+          <button class="choice" data-q="q2" data-a="guess">
+            <span class="cTitle">It guesses</span>
+            <span class="cSub">Confidently. Passionately. Incorrectly.</span>
+          </button>
+        </div>
+      </div>
+      <div class="ghostline" aria-hidden="true">Confidence ≠ safety.</div>
+    </section>
+
+    <section class="panel q" data-panel="q3" data-q="q3">
+      <div class="content">
+        <div class="eyebrow">Question 3</div>
+        <h2>How do you decide the agent is “accurate”?</h2>
+        <p class="lead">If your answer is “it felt right,” we should talk.</p>
+
+        <div class="choices">
+          <button class="choice" data-q="q3" data-a="vibes">
+            <span class="cTitle">Vibes & spot checks</span>
+            <span class="cSub">A demo, some QA, a prayer.</span>
+          </button>
+          <button class="choice" data-q="q3" data-a="rules">
+            <span class="cTitle">Business rules</span>
+            <span class="cSub">Risk tiers + thresholds + policy gating.</span>
+          </button>
+          <button class="choice" data-q="q3" data-a="humanLoop">
+            <span class="cTitle">Human-in-the-loop</span>
+            <span class="cSub">It drafts; humans approve anything important.</span>
+          </button>
+          <button class="choice" data-q="q3" data-a="evals">
+            <span class="cTitle">Evals + telemetry</span>
+            <span class="cSub">We measure, trace, and iterate like adults.</span>
+          </button>
+        </div>
+      </div>
+      <div class="ghostline" aria-hidden="true">Accuracy without context is theater.</div>
+    </section>
+
+    <section class="panel q" data-panel="q4" data-q="q4">
+      <div class="content">
+        <div class="eyebrow">Question 4</div>
+        <h2>Where does the agent get “truth” from?</h2>
+        <p class="lead">If it can’t see reality, it will invent a beautiful one.</p>
+
+        <div class="choices">
+          <button class="choice" data-q="q4" data-a="promptOnly">
+            <span class="cTitle">Prompt only</span>
+            <span class="cSub">Mostly instructions. Minimal real data.</span>
+          </button>
+          <button class="choice" data-q="q4" data-a="rag">
+            <span class="cTitle">RAG over docs</span>
+            <span class="cSub">KBs, tickets, PDFs… hopefully updated.</span>
+          </button>
+          <button class="choice" data-q="q4" data-a="structured">
+            <span class="cTitle">Structured business data</span>
+            <span class="cSub">Entities, states, policies, and constraints.</span>
+          </button>
+          <button class="choice" data-q="q4" data-a="tools">
+            <span class="cTitle">Tools + systems</span>
+            <span class="cSub">Validate + execute workflows, not just talk.</span>
+          </button>
+        </div>
+      </div>
+      <div class="ghostline" aria-hidden="true">Give it reality. Then give it permission.</div>
+    </section>
+
+    <!-- RESULT + CTA -->
+    <section class="panel result" data-panel="result" id="resultPanel">
+      <div class="content">
+        <div class="eyebrow">Your snapshot</div>
+        <h2 id="resultTitle">You’re… loading.</h2>
+        <p class="lead" id="resultSub">Answer the questions above to get a clean recommendation.</p>
+
+        <div class="pillRow" id="pillRow"></div>
+
+        <div class="resultCard">
+          <div class="rcK">The move</div>
+          <div class="rcT" id="resultMove"></div>
+        </div>
+
+        <div class="row">
+          <a class="btn primary" id="book" href="https://tidycal.com/jasonfishbein/briefchat" target="_blank" rel="noopener noreferrer">
+            Book a brief chat <span class="arr" aria-hidden="true">→</span>
+          </a>
+          <button class="btn ghost" id="copy">Copy a sharable link</button>
+          <button class="btn ghost" id="restart">Restart</button>
+        </div>
+
+        <div class="tiny">
+          You’ll get my email after you book. Because that’s how calendars work. 🙂
+        </div>
+      </div>
+
+      <div class="aside">
+        <div class="callout">
+          <div class="callK">What happens on the call</div>
+          <ul>
+            <li>We map your agent to a simple risk ladder</li>
+            <li>We identify the single missing “trust component”</li>
+            <li>You leave with a first fix you can ship this week</li>
+          </ul>
+        </div>
+        <div class="callout">
+          <div class="callK">What does not happen</div>
+          <ul>
+            <li>No sales monologue</li>
+            <li>No 47-slide deck</li>
+            <li>No “just fine-tune it” coping strategy</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div>GitHub Pages • One file flow • No tracking</div>
+      <div>© <span id="year"></span> Jason Fishbein</div>
     </footer>
   </main>
 

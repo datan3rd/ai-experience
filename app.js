@@ -1,340 +1,208 @@
-// AI Reality Check — Pro
-const TIDYCAL_LINK = "https://tidycal.com/jasonfishbein/briefchat";
+// Cuberto-ish walkthrough (simple)
+const BOOKING = "https://tidycal.com/jasonfishbein/briefchat";
 
-const QUESTIONS = [
-  { kicker:"The setup", aside:"The part where leadership says “quick question” and your weekend evaporates.",
-    title:"Why does your team want an AI agent right now?",
-    sub:"Pick the closest truth. Incentives are everything.",
-    options:[
-      {label:"Leadership pressure", desc:"We need to show progress. Yesterday.", tag:"pressure", w:{demo:2,risk:1}},
-      {label:"Efficiency / cost reduction", desc:"Automation that survives contact with reality.", tag:"efficiency", w:{system:2}},
-      {label:"Customer experience", desc:"Faster answers without the support fire drill.", tag:"cx", w:{system:1,guard:1}},
-      {label:"Competitive fear", desc:"We don’t want to be the last company without “agentic.”", tag:"fear", w:{demo:1,risk:2}},
-    ]},
-  { kicker:"Trust vs vibes", aside:"If your control strategy is “it felt confident,” I have news.",
-    title:"When your agent gives an answer, how do you know it’s safe?",
-    sub:"Model confidence ≠ business safety. Different planets.",
-    options:[
-      {label:"Confidence score", desc:"If it’s high enough, we let it pass.", tag:"confidence", w:{demo:1,risk:2}},
-      {label:"Business rules / thresholds", desc:"We gate actions by risk + value + policy.", tag:"rules", w:{system:2}},
-      {label:"Human review", desc:"Humans approve anything that could matter.", tag:"human", w:{guard:2}},
-      {label:"We don’t — we trust it", desc:"We ship and hope. A classic.", tag:"trust", w:{risk:3}},
-    ]},
-  { kicker:"Data reality", aside:"This is where “smart” becomes “confidently wrong.”",
-    title:"What happens when the input data is incomplete or wrong?",
-    sub:"If you don’t design the behavior here, the model will… improvise.",
-    options:[
-      {label:"It stops", desc:"Fail closed. No guesses. No drama.", tag:"stop", w:{guard:2}},
-      {label:"It asks clarifying questions", desc:"It pauses and requests missing fields.", tag:"clarify", w:{system:2}},
-      {label:"It escalates", desc:"It routes to a human / specialist queue.", tag:"escalate", w:{guard:1,system:1}},
-      {label:"It answers anyway", desc:"It fills gaps with best guesses.", tag:"guess", w:{risk:3}},
-    ]},
-  { kicker:"Context", aside:"If your agent can’t see reality… it will invent one. Beautifully.",
-    title:"Where does your agent get its context from?",
-    sub:"If context is thin, accuracy debates are just theater.",
-    options:[
-      {label:"Prompt only", desc:"Mostly instructions. Minimal real data.", tag:"prompt", w:{demo:2}},
-      {label:"RAG over docs", desc:"It retrieves from docs, tickets, or KBs.", tag:"rag", w:{system:1}},
-      {label:"Structured business data", desc:"It sees entities, states, policies.", tag:"structured", w:{system:2}},
-      {label:"Tools + systems", desc:"It validates & executes real workflows.", tag:"tools", w:{system:2,guard:1}},
-    ]},
-  { kicker:"Accountability", aside:"If something breaks, do you have an owner… or a meeting?",
-    title:"If the agent makes a costly mistake, who is accountable?",
-    sub:"If this isn’t defined, production becomes liability.",
-    options:[
-      {label:"The model", desc:"We treat it like a black box oracle.", tag:"oracle", w:{risk:3}},
-      {label:"Engineering", desc:"The build team owns outcomes.", tag:"eng", w:{guard:1}},
-      {label:"The business owner", desc:"Workflow owners define acceptable risk.", tag:"biz", w:{system:2}},
-      {label:"We haven’t defined that", desc:"If it breaks, it’s… a debate.", tag:"undef", w:{risk:2,demo:1}},
-    ]},
-  { kicker:"Observability", aside:"You can’t pack the parachutes after you take off.",
-    title:"Can you explain why the agent did what it did… after the fact?",
-    sub:"If you can’t inspect behavior, you can’t scale trust.",
-    options:[
-      {label:"Yes, with traces", desc:"Inputs, tools used, decisions — captured.", tag:"traces", w:{system:2}},
-      {label:"Partially", desc:"We have logs, but not decision-grade.", tag:"partial", w:{guard:1,demo:1}},
-      {label:"Not really", desc:"We rely on anecdotal QA.", tag:"anecdotal", w:{demo:2}},
-      {label:"We don’t measure it", desc:"We’ll add it later. Sure.", tag:"none", w:{risk:2}},
-    ]},
-  { kicker:"Handoff design", aside:"This is where your agent learns humility. Or doesn’t.",
-    title:"How does the agent decide when to hand off to a human?",
-    sub:"This is the difference between automation and chaos.",
-    options:[
-      {label:"Always", desc:"It drafts. Humans decide.", tag:"draft", w:{guard:2}},
-      {label:"Confidence threshold", desc:"If low confidence, it escalates.", tag:"confhandoff", w:{demo:1,guard:1}},
-      {label:"Business risk gating", desc:"High-risk routes to humans by design.", tag:"riskgate", w:{system:2}},
-      {label:"It doesn’t", desc:"It tries to finish everything. Bold.", tag:"finishall", w:{risk:3}},
-    ]},
-];
+const state = {
+  answers: { q1:null, q2:null, q3:null, q4:null },
+};
 
-const ARCHETYPES = [
-  { id:"prototype_trap", name:"You’re in the Prototype Trap",
-    sub:"Your agent looks impressive in demos… but it’s not designed as a trustworthy system yet.",
-    tags:["Demo energy","Production risk","Accuracy theater"],
-    looks:["A dazzling demo… and unpredictable outcomes","Confidence scores treated like safety signals","“We’ll add guardrails later” keeps slipping"],
-    risk:["One high-visibility failure nukes trust","Support/ops absorbs the blast radius","Your best people become prompt babysitters"],
-    move:"Define **risk tiers** + **handoff rules** first. Then instrument traces (inputs, tools, decisions). When you can inspect behavior, you can scale it."},
-  { id:"guardrail_gap", name:"You’ve got a Guardrail Gap",
-    sub:"You’re moving fast, but escalation and safety controls aren’t designed — they’re improvised.",
-    tags:["Fast build","Soft controls","Hidden liability"],
-    looks:["Humans are the safety net… with holes","Edge cases show up as fire drills","“It worked yesterday” becomes a status update"],
-    risk:["Teams quietly revert to manual work","Leadership asks for ROI while risk is undefined","Incidents become meetings instead of fixes"],
-    move:"Build a **handoff ladder**: what the agent does alone, what it drafts for approval, and what always escalates. Tie it to business value + risk — not confidence."},
-  { id:"context_thin", name:"Your Context Is Too Thin",
-    sub:"The agent is being asked to reason without seeing the actual truth of your business.",
-    tags:["Thin context","Generic answers","Hallucination bait"],
-    looks:["Heavy prompting, light data","RAG helps… but answers still feel generic","Users ask follow-ups because context is missing"],
-    risk:["Hallucinations become predictable under missing context","Your domain experts lose patience (quietly)","You hit a ceiling and blame “the model”"],
-    move:"Give the agent **structured reality**: entities, policies, states. Then add tools that validate outcomes against source systems. Reality is the best guardrail."},
-  { id:"system_builder", name:"You’re Building a Real System",
-    sub:"You’re thinking in workflows, risk, and inspection — which is how this scales without chaos.",
-    tags:["Risk-gated","Observable","Scalable trust"],
-    looks:["Risk gating is intentional","Escalation paths exist and are explainable","Observability is a prerequisite, not a nice-to-have"],
-    risk:["Your main risk is scope creep, not chaos","You’ll be asked to replicate this across teams","You might become the AI adult in the room"],
-    move:"Productize your pattern: reusable risk tiers, logging standards, eval suites. Expand capabilities without expanding liability."},
-];
+const $ = (s)=>document.querySelector(s);
+const $$ = (s)=>Array.from(document.querySelectorAll(s));
+const year = new Date().getFullYear();
+$("#year").textContent = String(year);
 
-const $ = (id)=>document.getElementById(id);
-const state = { i:0, answers:Array(QUESTIONS.length).fill(null), sound:false };
-let audioCtx = null;
-
-function beep(freq=520, ms=35, type="sine", gain=0.02){
-  if(!state.sound) return;
-  try{
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    o.type = type; o.frequency.value = freq;
-    g.gain.value = gain;
-    o.connect(g); g.connect(audioCtx.destination);
-    o.start();
-    setTimeout(()=>o.stop(), ms);
-  }catch(e){}
+function scrollToPanel(panel){
+  const el = document.querySelector(`[data-panel="${panel}"]`);
+  if(!el) return;
+  el.scrollIntoView({ behavior:"smooth", block:"start" });
 }
-
-function show(view){
-  ["introView","quizView","resultsView"].forEach(v => $(v).classList.add("hidden"));
-  $(view).classList.remove("hidden");
-  $(view).classList.add("fadeIn");
-  setTimeout(()=>$(view).classList.remove("fadeIn"), 260);
-}
-
-function toast(msg){
-  const t = $("toast");
-  t.textContent = msg;
-  t.classList.remove("hidden");
-  setTimeout(()=>t.classList.add("hidden"), 1400);
-}
-
-function escapeHtml(s){ return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
-function md(s){ return escapeHtml(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"); }
-function setYear(){ $("year").textContent = String(new Date().getFullYear()); }
 
 function setProgress(){
-  const pct = (state.i / QUESTIONS.length) * 100;
-  $("fill").style.width = `${pct}%`;
-  $("qCount").textContent = `Question ${state.i+1} of ${QUESTIONS.length}`;
+  const total = 4;
+  const done = Object.values(state.answers).filter(Boolean).length;
+  const pct = Math.round((done / total) * 100);
+  $("#fill").style.width = `${pct}%`;
+  $("#pText").textContent = `${pct}%`;
 }
 
-function renderQ(){
-  const q = QUESTIONS[state.i];
-  $("qKicker").textContent = q.kicker;
-  $("qAside").textContent = q.aside || "";
-  $("qTitle").textContent = q.title;
-  $("qSub").textContent = q.sub;
-
-  const chosen = state.answers[state.i]?.optIndex ?? null;
-  $("nextBtn").disabled = chosen == null;
-
-  $("options").innerHTML = q.options.map((o, idx)=>{
-    const sel = chosen===idx ? "selected" : "";
-    return `
-      <div class="opt ${sel}" role="button" tabindex="0" data-idx="${idx}">
-        <div class="n">${idx+1}</div>
-        <div class="optMain">
-          <div class="optTitle">${escapeHtml(o.label)}</div>
-          <div class="optDesc">${escapeHtml(o.desc)}</div>
-        </div>
-      </div>
-    `;
-  }).join("");
-
-  document.querySelectorAll(".opt").forEach(el=>{
-    el.addEventListener("click", ()=>select(Number(el.dataset.idx)));
-    el.addEventListener("keydown", (e)=>{
-      if(e.key==="Enter"||e.key===" "){ e.preventDefault(); select(Number(el.dataset.idx)); }
-    });
+function setSelected(q, a){
+  state.answers[q] = a;
+  $$(`.choice[data-q="${q}"]`).forEach(btn=>{
+    btn.classList.toggle("selected", btn.dataset.a === a);
   });
-
-  $("qCard").classList.add("fadeIn");
-  setTimeout(()=>$("qCard").classList.remove("fadeIn"), 260);
-
   setProgress();
+  updateResult();
 }
 
-function select(idx){
-  const opt = QUESTIONS[state.i].options[idx];
-  state.answers[state.i] = { optIndex: idx, w: opt.w || {} };
-  $("nextBtn").disabled = false;
-  beep(640, 30, "triangle", 0.02);
-  renderQ();
+function getArchetype(){
+  const { q1, q2, q3, q4 } = state.answers;
+
+  // Simple mapping → minimal, opinionated, and readable.
+  // "Vibes" and "guess" heavily push toward prototype trap.
+  let score = { system:0, risk:0, context:0, guard:0 };
+
+  if(q1 === "pressure" || q1 === "fear") score.risk += 1;
+  if(q1 === "efficiency" || q1 === "cx") score.system += 1;
+
+  if(q2 === "guess") score.risk += 2;
+  if(q2 === "failClosed") score.guard += 2;
+  if(q2 === "clarify") score.system += 1;
+  if(q2 === "escalate") score.guard += 1;
+
+  if(q3 === "vibes") score.risk += 2;
+  if(q3 === "rules") score.system += 2;
+  if(q3 === "humanLoop") score.guard += 2;
+  if(q3 === "evals") score.system += 2;
+
+  if(q4 === "promptOnly") score.context += 2;
+  if(q4 === "rag") score.context += 1;
+  if(q4 === "structured") score.system += 2;
+  if(q4 === "tools") score.system += 2, score.guard += 1;
+
+  // Archetypes
+  if(score.system >= 6 && score.risk <= 2) return "system_builder";
+  if(score.risk >= 4 && score.guard <= 2) return "prototype_trap";
+  if(score.context >= 3 && score.system <= 4) return "context_thin";
+  if(score.guard <= 2 && score.risk >= 3) return "guardrail_gap";
+  return "prototype_trap";
 }
 
-function compute(){
-  const totals = { demo:0, risk:0, system:0, guard:0 };
-  for(const a of state.answers){
-    if(!a) continue;
-    for(const k of Object.keys(totals)) totals[k] += (a.w[k] || 0);
+const archetypes = {
+  prototype_trap: {
+    title: "Prototype Trap",
+    sub: "Impressive demo energy… but not designed for trust at scale.",
+    pills: ["Demo energy", "Hidden risk", "Accuracy theater"],
+    move: "Define a <strong>risk ladder</strong> (low / medium / high). Then decide: what the agent does alone, what it drafts for approval, and what always escalates. No ladders = chaos with nicer UI."
+  },
+  guardrail_gap: {
+    title: "Guardrail Gap",
+    sub: "You’re building fast — but the safety story is improvisational.",
+    pills: ["Fast build", "Soft controls", "Liability"],
+    move: "Design handoff rules around <strong>business risk</strong>, not model confidence. Confidence is vibes in a lab coat."
+  },
+  context_thin: {
+    title: "Thin Context",
+    sub: "The agent is being asked to reason without seeing enough truth.",
+    pills: ["Generic answers", "Hallucination bait", "Too much prompting"],
+    move: "Give the agent <strong>structured reality</strong> (entities, states, policies) and tools to validate outcomes against source systems. Reality is the best guardrail."
+  },
+  system_builder: {
+    title: "Real System",
+    sub: "You’re thinking in workflows, risk, and inspection. That’s how this scales.",
+    pills: ["Risk‑gated", "Observable", "Scalable trust"],
+    move: "Productize the pattern: reusable risk tiers, logging standards, eval suites. This is how you scale capability without scaling liability."
   }
-  const { demo, risk, system, guard } = totals;
+};
 
-  if(system >= 9 && risk <= 5) return ARCHETYPES.find(a=>a.id==="system_builder");
-  if(risk >= 9 && guard <= 5) return ARCHETYPES.find(a=>a.id==="prototype_trap");
-  if(risk >= 7 && guard <= 6) return ARCHETYPES.find(a=>a.id==="guardrail_gap");
-  if(system <= 7 && demo >= 6) return ARCHETYPES.find(a=>a.id==="context_thin");
-  if(system >= 8) return ARCHETYPES.find(a=>a.id==="system_builder");
-  return ARCHETYPES.find(a=>a.id==="prototype_trap");
-}
-
-function renderResults(a){
-  $("rTitle").textContent = a.name;
-  $("rSub").textContent = a.sub;
-  $("tags").innerHTML = a.tags.map((t,i)=>`<span class="tag ${i===0?"hot":""}">${escapeHtml(t)}</span>`).join("");
-  $("looks").innerHTML = a.looks.map(x=>`<li>${escapeHtml(x)}</li>`).join("");
-  $("risk").innerHTML = a.risk.map(x=>`<li>${escapeHtml(x)}</li>`).join("");
-  $("move").innerHTML = md(a.move);
-  $("bookBtn").setAttribute("href", TIDYCAL_LINK);
-
-  const url = new URL(window.location.href);
-  url.searchParams.set("result", a.id);
-  history.replaceState({}, "", url.toString());
-}
-
-function start(){
-  show("quizView");
-  state.i = 0;
-  renderQ();
-  $("fill").style.width = `${(1/QUESTIONS.length)*100}%`;
-  toast("Alright. No lying. (The UI will judge silently.)");
-  beep(520, 45, "sine", 0.02);
-}
-
-function next(){
-  if(state.answers[state.i] == null){
-    toast("Pick one. “It depends” is not an option.");
-    beep(180, 60, "sawtooth", 0.015);
+function updateResult(){
+  const answered = Object.values(state.answers).filter(Boolean).length;
+  if(answered < 4){
+    $("#resultTitle").textContent = "Answer the 4 questions above.";
+    $("#resultSub").textContent = "Then I’ll give you a clean snapshot + the one move I’d make first.";
+    $("#pillRow").innerHTML = "";
+    $("#resultMove").innerHTML = "No tricks. Just finish the walkthrough.";
     return;
   }
-  if(state.i < QUESTIONS.length - 1){
-    state.i += 1;
-    renderQ();
-    beep(740, 30, "triangle", 0.018);
-  }else{
-    const a = compute();
-    show("resultsView");
-    $("fill").style.width = "100%";
-    renderResults(a);
-    toast("Diagnosis complete. Proceed with adult supervision.");
-    beep(880, 60, "sine", 0.02);
-  }
-}
+  const key = getArchetype();
+  const a = archetypes[key];
+  $("#resultTitle").textContent = a.title;
+  $("#resultSub").textContent = a.sub;
+  $("#pillRow").innerHTML = a.pills.map((p,i)=>`<span class="mini ${i===0?"hot":""}">${p}</span>`).join("");
+  $("#resultMove").innerHTML = a.move;
 
-function back(){
-  if(state.i > 0){ state.i -= 1; renderQ(); beep(320, 30, "triangle", 0.016); }
-  else{ show("introView"); }
-}
-
-function restart(){
-  state.i = 0;
-  state.answers = Array(QUESTIONS.length).fill(null);
+  // write result into URL so it can be shared
   const url = new URL(window.location.href);
-  url.searchParams.delete("result");
+  url.searchParams.set("r", key);
   history.replaceState({}, "", url.toString());
-  show("introView");
-  toast("Reset. Your agent is safe. For now.");
-  beep(260, 40, "sine", 0.015);
+}
+
+function loadFromUrl(){
+  const url = new URL(window.location.href);
+  const r = url.searchParams.get("r");
+  if(r && archetypes[r]){
+    $("#resultTitle").textContent = archetypes[r].title;
+    $("#resultSub").textContent = archetypes[r].sub;
+    $("#pillRow").innerHTML = archetypes[r].pills.map((p,i)=>`<span class="mini ${i===0?"hot":""}">${p}</span>`).join("");
+    $("#resultMove").innerHTML = archetypes[r].move;
+  }
 }
 
 function copyLink(){
   const url = new URL(window.location.href);
   navigator.clipboard.writeText(url.toString()).then(()=>{
-    $("copyBtn").textContent = "Copied ✓";
-    toast("Link copied. Deploy it into Slack.");
-    beep(900, 30, "triangle", 0.02);
-    setTimeout(()=>$("copyBtn").textContent="Copy results link", 1200);
-  }).catch(()=>toast("Copy failed. Clipboard is in governance review."));
+    $("#copy").textContent = "Copied ✓";
+    setTimeout(()=>$("#copy").textContent = "Copy a sharable link", 1200);
+  }).catch(()=>{
+    $("#copy").textContent = "Copy failed";
+    setTimeout(()=>$("#copy").textContent = "Copy a sharable link", 1200);
+  });
 }
 
-function again(){ restart(); start(); }
-
-function openModal(html){
-  $("modalBody").innerHTML = html;
-  $("modal").classList.remove("hidden");
-  beep(600, 30, "sine", 0.015);
-}
-function closeModal(){ $("modal").classList.add("hidden"); }
-
-function peek(){
-  const html = QUESTIONS.map((q, i)=>{
-    const opts = q.options.map((o, j)=>`<li><strong>${j+1}. ${escapeHtml(o.label)}</strong> — ${escapeHtml(o.desc)}</li>`).join("");
-    return `<h3>Q${i+1} • ${escapeHtml(q.kicker)}</h3>
-      <div style="margin-bottom:6px;opacity:.95;"><strong>${escapeHtml(q.title)}</strong></div>
-      <div style="margin-bottom:8px;opacity:.85;">${escapeHtml(q.sub)}</div>
-      <ul>${opts}</ul>`;
-  }).join("");
-  openModal(html);
-}
-
-function loadResult(){
+function restart(){
+  state.answers = { q1:null, q2:null, q3:null, q4:null };
+  $$(".choice").forEach(b=>b.classList.remove("selected"));
   const url = new URL(window.location.href);
-  const r = url.searchParams.get("result");
-  if(!r) return false;
-  const a = ARCHETYPES.find(x=>x.id===r);
-  if(!a) return false;
-  show("resultsView");
-  renderResults(a);
-  return true;
+  url.searchParams.delete("r");
+  history.replaceState({}, "", url.toString());
+  setProgress();
+  updateResult();
+  scrollToPanel("hero");
 }
 
 function wire(){
-  $("startBtn").addEventListener("click", start);
-  $("peekBtn").addEventListener("click", peek);
-  $("backBtn").addEventListener("click", back);
-  $("restartBtn").addEventListener("click", restart);
-  $("nextBtn").addEventListener("click", next);
-  $("copyBtn").addEventListener("click", copyLink);
-  $("againBtn").addEventListener("click", again);
-  $("homeBtn").addEventListener("click", restart);
+  $("#start").addEventListener("click", ()=>scrollToPanel("q1"));
+  $("#skipToBook").addEventListener("click", ()=>scrollToPanel("result"));
+  $("#restart").addEventListener("click", restart);
+  $("#copy").addEventListener("click", copyLink);
+  $("#book").setAttribute("href", BOOKING);
 
-  $("backdrop").addEventListener("click", closeModal);
-  $("closeModal").addEventListener("click", closeModal);
+  const brand = $("#toTop");
+  brand.addEventListener("click", restart);
+  brand.addEventListener("keydown", (e)=>{ if(e.key==="Enter") restart(); });
 
-  $("toggleSound").addEventListener("click", ()=>{
-    state.sound = !state.sound;
-    $("toggleSound").setAttribute("aria-pressed", String(state.sound));
-    $("soundLabel").textContent = `Sound: ${state.sound ? "On" : "Off"}`;
-    $("toggleSound").querySelector(".pillDot").style.background = state.sound ? "rgba(34,197,94,.55)" : "rgba(255,255,255,.25)";
-    toast(state.sound ? "Sound on. Tiny dopamine enabled." : "Sound off. Silence is a feature.");
-    beep(state.sound ? 760 : 220, 60, "sine", 0.02);
+  $$(".choice").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const q = btn.dataset.q;
+      const a = btn.dataset.a;
+      setSelected(q, a);
+
+      // smooth guide to next panel
+      const nextMap = { q1:"q2", q2:"q3", q3:"q4", q4:"result" };
+      setTimeout(()=>scrollToPanel(nextMap[q] || "result"), 260);
+    });
   });
 
-  window.addEventListener("keydown", (e)=>{
-    if(e.key==="Escape"){
-      if(!$("modal").classList.contains("hidden")){ closeModal(); return; }
-      restart(); return;
+  // Progress based on scroll (feels premium, without being noisy)
+  const panels = $$("[data-panel]");
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){
+        const idx = panels.indexOf(e.target);
+        const pct = Math.max($("#fill").style.width.replace("%","")|0, Math.round((idx/(panels.length-1))*100));
+        $("#fill").style.width = `${pct}%`;
+        $("#pText").textContent = `${pct}%`;
+      }
     }
-    const quizVisible = !$("quizView").classList.contains("hidden");
-    if(!quizVisible) return;
-    if(["1","2","3","4"].includes(e.key)) select(Number(e.key)-1);
-    if(e.key==="Enter") next();
-    if(e.key==="ArrowLeft") back();
-    if(e.key==="ArrowRight") next();
+  }, { threshold: 0.55 });
+  panels.forEach(p=>io.observe(p));
+
+  // Cursor follower (subtle)
+  const dot = document.querySelector(".cursorDot");
+  const ring = document.querySelector(".cursorRing");
+  let x=0,y=0, rx=0, ry=0;
+  window.addEventListener("mousemove",(e)=>{
+    x = e.clientX; y = e.clientY;
+    dot.style.left = x+"px"; dot.style.top = y+"px";
   });
+  function raf(){
+    rx += (x - rx) * 0.10;
+    ry += (y - ry) * 0.10;
+    ring.style.left = rx+"px"; ring.style.top = ry+"px";
+    requestAnimationFrame(raf);
+  }
+  raf();
 }
 
-(function init(){
-  setYear();
-  wire();
-  const loaded = loadResult();
-  if(!loaded) show("introView");
-})();
+setProgress();
+updateResult();
+loadFromUrl();
+wire();
