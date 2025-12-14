@@ -1,242 +1,203 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#070A12" />
-    <title>AI Reality Check • Magical Edition</title>
-    <meta name="description" content="A cinematic 2-minute AI Reality Check. Built for leaders shipping agents into real workflows." />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#070A12" />
+  <title>AI Reality Check</title>
+  <meta name="description" content="A 2‑minute diagnostic for leaders shipping AI agents into real workflows." />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,700&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
 
-  <body>
-    <!-- Cinematic background -->
-    <canvas id="stars" aria-hidden="true"></canvas>
-    <div class="aurora" aria-hidden="true"></div>
-    <div class="grain" aria-hidden="true"></div>
-    <div class="vignette" aria-hidden="true"></div>
+<body>
+  <div class="bg" aria-hidden="true">
+    <div class="bg-mesh"></div>
+    <div class="bg-noise"></div>
+    <div class="bg-vignette"></div>
+  </div>
 
-    <main class="shell" role="main">
-      <header class="topbar">
-        <div class="brand" id="brandHome" title="Click to restart">
-          <div class="sig" aria-hidden="true">
-            <div class="sig-core"></div>
-            <div class="sig-ring"></div>
-          </div>
-          <div>
-            <div class="brand-title">AI Reality Check</div>
-            <div class="brand-subtitle">Designed for leaders. Written for humans.</div>
-          </div>
-        </div>
+  <main class="shell">
+    <header class="topbar">
+      <button class="brand" id="homeBtn" aria-label="Go to start">
+        <span class="mark" aria-hidden="true"></span>
+        <span class="brandText">
+          <span class="brandTitle">AI Reality Check</span>
+          <span class="brandSub">Built for leaders. Written for humans.</span>
+        </span>
+      </button>
 
-        <div class="top-actions">
-          <button class="chip" id="soundToggle" title="Tiny UI sounds (optional)">
-            <span class="chip-dot"></span>
-            <span id="soundLabel">Sound: Off</span>
-          </button>
+      <nav class="actions" aria-label="Top actions">
+        <button class="pill" id="toggleSound" type="button" aria-pressed="false">
+          <span class="pillDot" aria-hidden="true"></span>
+          <span id="soundLabel">Sound: Off</span>
+        </button>
 
-          <button class="chip" id="easterEgg" title="Absolutely do not click. (You will.)">
-            <span class="chip-emoji" aria-hidden="true">🧪</span>
-            <span>Do Not Click</span>
-          </button>
+        <a class="pill pillPrimary" href="https://tidycal.com/jasonfishbein/briefchat" target="_blank" rel="noopener noreferrer">
+          Book a brief chat <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </nav>
+    </header>
 
-          <a class="chip chip-link" href="https://tidycal.com/jasonfishbein/briefchat" target="_blank" rel="noopener noreferrer" title="Skip to booking">
-            <span class="chip-emoji" aria-hidden="true">📅</span>
-            <span>Brief Chat</span>
-          </a>
-        </div>
-      </header>
-
-      <section class="stage" id="app" aria-live="polite">
-        <!-- INTRO -->
-        <section class="view view-intro" id="viewIntro">
-          <div class="hero">
-            <div class="badge-row">
-              <span class="badge">2 minutes</span>
-              <span class="badge">7 questions</span>
-              <span class="badge">0% fluff</span>
-              <span class="badge badge-hot">CEO-proof-ish</span>
-            </div>
-
-            <h1 class="h1">
-              Your AI agent doesn’t need to be “smart.”
-              <span class="grad">It needs to be safe.</span>
-            </h1>
-
-            <p class="lead">
-              This is a system check disguised as a vibe. Answer honestly and you’ll get a clean archetype
-              + the exact “fix this first” move. No email capture. No webinar. No harm. Probably.
-            </p>
-
-            <div class="cta-row">
-              <button class="btn btn-primary" id="startBtn">
-                Start the Reality Check <span class="arrow">→</span>
-              </button>
-              <button class="btn btn-ghost" id="peekBtn" title="Peek first. You know you want to.">
-                Peek at the questions
-              </button>
-            </div>
-
-            <div class="micro">
-              Keyboard: <span class="kbd">1</span>–<span class="kbd">4</span> to answer • <span class="kbd">Enter</span> next • <span class="kbd">Esc</span> restart
-            </div>
+    <section class="card" id="app" aria-live="polite">
+      <section class="view" id="introView">
+        <div class="hero">
+          <div class="chips">
+            <span class="chip">2 minutes</span>
+            <span class="chip">7 questions</span>
+            <span class="chip">No email gate</span>
+            <span class="chip chipHot">High signal</span>
           </div>
 
-          <div class="cards">
-            <div class="mini">
-              <div class="mini-title">What this is</div>
-              <div class="mini-body">A practical diagnostic based on the stuff that breaks in production — not on vibes, vendor decks, or “accuracy.”</div>
-            </div>
-            <div class="mini">
-              <div class="mini-title">What this is not</div>
-              <div class="mini-body">A personality quiz. You’re not a “Visionary Unicorn.” You’re a human trying to ship software.</div>
-            </div>
-            <div class="mini">
-              <div class="mini-title">The prize</div>
-              <div class="mini-body">A result that reads like “oh… that’s us.” Plus a next move you can execute Monday morning.</div>
-            </div>
-          </div>
-        </section>
+          <h1 class="h1">
+            Your AI agent doesn’t need to be “smart.”
+            <span class="grad">It needs to be safe.</span>
+          </h1>
 
-        <!-- QUIZ -->
-        <section class="view view-quiz hidden" id="viewQuiz">
-          <div class="quiz-top">
-            <div class="progress">
-              <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-              </div>
-              <div class="progress-meta">
-                <span id="progressText">Question 1 of 7</span>
-                <span class="dot">•</span>
-                <span id="progressHint">Pick the closest truth</span>
-              </div>
-            </div>
+          <p class="lead">
+            This is the diagnostic I wish every team ran before showing leadership a demo that
+            <em>“works on my laptop.”</em>
+            Answer honestly and you’ll get an archetype + the one move that changes outcomes fast.
+          </p>
 
-            <div class="nav">
-              <button class="btn btn-ghost" id="backBtn" aria-label="Back">← Back</button>
-              <button class="btn btn-ghost" id="restartBtn" aria-label="Restart">Restart</button>
-            </div>
+          <div class="ctaRow">
+            <button class="btn btnPrimary" id="startBtn" type="button">
+              Start the check <span class="arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="btn btnGhost" id="peekBtn" type="button">
+              Peek at the questions
+            </button>
           </div>
 
-          <div class="question glass tilt" id="questionCard">
-            <div class="q-top">
-              <div class="q-kicker" id="qKicker">Reality Check</div>
-              <div class="q-snark" id="qSnark" aria-hidden="true"></div>
-            </div>
-
-            <h2 class="q-title" id="qTitle">Question title</h2>
-            <p class="q-sub" id="qSub">Short context</p>
-
-            <div class="options" id="options"></div>
-
-            <div class="q-footer">
-              <div class="hint">
-                Pro move: answer fast. Overthinking is how product roadmaps happen.
-              </div>
-              <button class="btn btn-primary" id="nextBtn" disabled>
-                Next <span class="arrow">→</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-        </section>
-
-        <!-- RESULTS -->
-        <section class="view view-results hidden" id="viewResults">
-          <div class="results-head">
-            <div class="results-kicker">Your snapshot</div>
-            <h2 class="h2" id="resultTitle">You’re in the Prototype Trap</h2>
-            <p class="lead" id="resultSubtitle">
-              Your agent looks impressive in demos, but it’s not designed as a trustworthy system yet.
-            </p>
-
-            <div class="result-tags" id="resultTags"></div>
-          </div>
-
-          <div class="grid">
-            <div class="panel glass">
-              <div class="panel-title">What this usually looks like</div>
-              <ul class="list" id="resultLooksLike"></ul>
-            </div>
-
-            <div class="panel glass">
-              <div class="panel-title">The real risk</div>
-              <ul class="list" id="resultRisk"></ul>
-            </div>
-
-            <div class="panel glass panel-wide">
-              <div class="panel-title">The move</div>
-              <div class="panel-body" id="resultNextMove"></div>
-            </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <div class="book glass">
-            <div class="book-left">
-              <div class="book-title">Want a fast second opinion?</div>
-              <div class="book-sub">Book a brief chat. I’ll tell you what to fix first — and what to stop arguing about in Slack.</div>
-            </div>
-            <div class="book-right">
-              <a class="btn btn-primary btn-wide" id="bookBtn" href="https://tidycal.com/jasonfishbein/briefchat" target="_blank" rel="noopener noreferrer">
-                Book a brief chat <span class="arrow">→</span>
-              </a>
-              <button class="btn btn-ghost btn-wide" id="shareBtn" title="Copy a link to this result">
-                Copy results link
-              </button>
-              <button class="btn btn-ghost btn-wide" id="replayBtn" title="Take it again (your answers will be different, right?)">
-                Replay the check
-              </button>
-            </div>
-          </div>
-
-          <div class="micro">
-            Bonus: share this internally and watch everyone argue about which answer is “technically correct.” (That’s the point.)
-          </div>
-        </section>
-
-        <!-- MODAL -->
-        <div class="modal hidden" id="modal">
-          <div class="modal-backdrop" id="modalBackdrop"></div>
-          <div class="modal-card glass" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-            <div class="modal-head">
-              <div class="modal-title" id="modalTitle">What you’ll be asked</div>
-              <button class="iconbtn" id="modalClose" aria-label="Close">✕</button>
-            </div>
-            <div class="modal-body" id="modalBody"></div>
+          <div class="meta">
+            Keyboard: <kbd>1</kbd>–<kbd>4</kbd> answer • <kbd>Enter</kbd> next • <kbd>Esc</kbd> restart
           </div>
         </div>
 
-        <!-- EASTER EGG POP -->
-        <div class="pop hidden" id="pop">
-          <div class="pop-inner glass">
-            <div class="pop-title">You clicked it. Of course you did.</div>
-            <div class="pop-body">
-              Congratulations. Your agent has been promoted to <strong>Chief Vibes Officer</strong>.
-              It will now respond to every customer ticket with: “Totally hear you.”<br /><br />
-              (Press <span class="kbd">Esc</span> to recover.)
-            </div>
-            <button class="btn btn-primary" id="popClose">I regret nothing</button>
+        <div class="featureGrid" role="list">
+          <div class="feature" role="listitem">
+            <div class="featureTitle">What you’ll learn</div>
+            <div class="featureBody">Where your agent is strong… and where it’s quietly creating liability.</div>
+          </div>
+          <div class="feature" role="listitem">
+            <div class="featureTitle">What this avoids</div>
+            <div class="featureBody">Accuracy theater. Vendor decks. “Just fine‑tune it” as a coping mechanism.</div>
+          </div>
+          <div class="feature" role="listitem">
+            <div class="featureTitle">What happens next</div>
+            <div class="featureBody">You get a result and a practical first move. If you want help: book a brief chat.</div>
           </div>
         </div>
       </section>
 
-      <footer class="footer">
-        <div class="footer-left">
-          <span class="muted">Built on GitHub Pages. Yes, really.</span>
-        </div>
-        <div class="footer-right">
-          <span class="muted">© <span id="year"></span> Jason Fishbein</span>
-        </div>
-      </footer>
-    </main>
+      <section class="view hidden" id="quizView">
+        <div class="quizTop">
+          <div class="progress">
+            <div class="bar" aria-hidden="true"><div class="fill" id="fill"></div></div>
+            <div class="progressMeta">
+              <span id="qCount">Question 1 of 7</span>
+              <span class="dot" aria-hidden="true">•</span>
+              <span id="qHint">Pick the closest truth</span>
+            </div>
+          </div>
 
-    <script src="./app.js"></script>
-  </body>
+          <div class="navBtns">
+            <button class="btn btnGhost" id="backBtn" type="button">← Back</button>
+            <button class="btn btnGhost" id="restartBtn" type="button">Restart</button>
+          </div>
+        </div>
+
+        <div class="qCard" id="qCard">
+          <div class="qHeader">
+            <div class="qKicker" id="qKicker">Reality Check</div>
+            <div class="qAside" id="qAside"></div>
+          </div>
+
+          <h2 class="h2" id="qTitle">Title</h2>
+          <p class="sub" id="qSub">Sub</p>
+
+          <div class="options" id="options"></div>
+
+          <div class="qFooter">
+            <div class="hint" id="hintText">Tip: answer fast. Your first instinct is usually the truth.</div>
+            <button class="btn btnPrimary" id="nextBtn" type="button" disabled>
+              Next <span class="arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="view hidden" id="resultsView">
+        <div class="resultsHead">
+          <div class="resultsKicker">Your snapshot</div>
+          <h2 class="h2 big" id="rTitle">You’re in the Prototype Trap</h2>
+          <p class="lead" id="rSub"></p>
+
+          <div class="tags" id="tags"></div>
+        </div>
+
+        <div class="grid">
+          <div class="panel">
+            <div class="panelTitle">What this usually looks like</div>
+            <ul class="list" id="looks"></ul>
+          </div>
+          <div class="panel">
+            <div class="panelTitle">The real risk</div>
+            <ul class="list" id="risk"></ul>
+          </div>
+          <div class="panel panelWide">
+            <div class="panelTitle">The move</div>
+            <div class="panelBody" id="move"></div>
+          </div>
+        </div>
+
+        <div class="divider" aria-hidden="true"></div>
+
+        <div class="ctaCard">
+          <div>
+            <div class="ctaTitle">Want a second opinion in 10 minutes?</div>
+            <div class="ctaBody">
+              Book a brief chat. I’ll tell you what to fix first — and what to stop arguing about in Slack.
+            </div>
+          </div>
+          <div class="ctaBtns">
+            <a class="btn btnPrimary btnWide" id="bookBtn" href="https://tidycal.com/jasonfishbein/briefchat" target="_blank" rel="noopener noreferrer">
+              Book a brief chat <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <button class="btn btnGhost btnWide" id="copyBtn" type="button">Copy results link</button>
+            <button class="btn btnGhost btnWide" id="againBtn" type="button">Run it again</button>
+          </div>
+        </div>
+
+        <div class="meta">
+          Pro tip: share this internally. If it sparks debate, that’s a feature — not a bug.
+        </div>
+      </section>
+
+      <div class="modal hidden" id="modal">
+        <div class="backdrop" id="backdrop"></div>
+        <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+          <div class="modalHead">
+            <div class="modalTitle" id="modalTitle">What you’ll be asked</div>
+            <button class="icon" id="closeModal" type="button" aria-label="Close">✕</button>
+          </div>
+          <div class="modalBody" id="modalBody"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="muted">GitHub Pages • No tracking • No email gate</span>
+      <span class="muted">© <span id="year"></span> Jason Fishbein</span>
+    </footer>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
 </html>
