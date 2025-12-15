@@ -92,7 +92,7 @@ function updateResult(){
   $("#resultTitle").textContent = snap.title;
   $("#resultSub").textContent = snap.sub;
   $("#pillRow").innerHTML = snap.pills.map((p,i)=>`<span class="mini ${i===0?"hot":""}">${p}</span>`).join("");
-  $("#resultMove").innerHTML = snap.move + `<div style="margin-top:10px;opacity:.85;color:rgba(255,255,255,.75)">Want a fast second opinion? Book 10 minutes. I’ll map your answers to a mature plan and show how to unlock more ROI.</div>`;
+  $("#resultMove").innerHTML = snap.move + `<div style="margin-top:10px;opacity:.85;color:rgba(255,255,255,.75)">Want a fast second opinion? Book 15 minutes. I’ll map your answers to a mature plan and show how to unlock more ROI.</div>`;
   const url = new URL(window.location.href);
   url.searchParams.set("s", snap.id);
   history.replaceState({}, "", url.toString());
@@ -105,7 +105,7 @@ function loadFromUrl(){
   $("#resultTitle").textContent = snap.title;
   $("#resultSub").textContent = snap.sub;
   $("#pillRow").innerHTML = snap.pills.map((p,i)=>`<span class="mini ${i===0?"hot":""}">${p}</span>`).join("");
-  $("#resultMove").innerHTML = snap.move + `<div style="margin-top:10px;opacity:.85;color:rgba(255,255,255,.75)">Want a fast second opinion? Book 10 minutes. I’ll map your answers to a mature plan and show how to unlock more ROI.</div>`;
+  $("#resultMove").innerHTML = snap.move + `<div style="margin-top:10px;opacity:.85;color:rgba(255,255,255,.75)">Want a fast second opinion? Book 15 minutes. I’ll map your answers to a mature plan and show how to unlock more ROI.</div>`;
 }
 function copyLink(){
   const url = new URL(window.location.href);
