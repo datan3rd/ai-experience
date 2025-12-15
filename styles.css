@@ -267,7 +267,7 @@ h2{
 
 .ghostline{
   grid-column:1/-1;
-  color:rgba(255,255,255,.10);
+  color: rgba(255,255,255,0.72); 
   font-weight:900;
   letter-spacing:.22em;
   text-transform:uppercase;
