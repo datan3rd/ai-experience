@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#070A12" />
-  <title>AI Reality Check → Brief Chat</title>
-  <meta name="description" content="A simple, premium walkthrough that leads naturally into a brief meeting." />
+  <title>AI Maturity Reality Check</title>
+  <meta name="description" content="Five questions. Zero fluff. A clearer path to mature your AI agent." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,14 +14,12 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <!-- Ambient background -->
   <div class="bg" aria-hidden="true">
     <div class="mesh"></div>
     <div class="noise"></div>
     <div class="vignette"></div>
   </div>
 
-  <!-- Cursor accent -->
   <div class="cursor" aria-hidden="true">
     <div class="cursorDot"></div>
     <div class="cursorRing"></div>
@@ -32,7 +30,7 @@
       <span class="mark" aria-hidden="true"></span>
       <div class="brandText">
         <div class="brandTitle">AI Reality Check</div>
-        <div class="brandSub">A short walkthrough. Zero fluff.</div>
+        <div class="brandSub">5 clicks. Your org’s true maturity.</div>
       </div>
     </div>
 
@@ -48,18 +46,16 @@
     </div>
   </header>
 
-  <main class="wrap" id="wrap">
-    <!-- HERO -->
+  <main class="wrap">
     <section class="panel hero" data-panel="hero">
       <div class="content">
-        <div class="eyebrow">This takes ~90 seconds.</div>
+        <div class="eyebrow">90 seconds. No email gate.</div>
         <h1>
-          You don’t need a “smarter” agent.
-          <span class="grad">You need a safer one.</span>
+          Your AI agent doesn’t need to be “smarter.”
+          <span class="grad">It needs to be shippable.</span>
         </h1>
         <p class="lead">
-          Answer a few quick questions. You’ll get a brutally honest snapshot and a clean next step.
-          No email. No funnel weirdness. Just signal.
+          Answer five questions. Get a maturity snapshot + the next move to squeeze more value out of your agent.
         </p>
 
         <div class="row">
@@ -68,190 +64,203 @@
         </div>
 
         <div class="tiny">
-          Tip: scroll or use your trackpad. Or just click an option. It will guide you.
+          Click an option → it auto-scrolls. If you overthink it, your agent will sense weakness.
         </div>
       </div>
 
       <div class="aside" aria-hidden="true">
         <div class="stack">
           <div class="card">
-            <div class="cardK">What you get</div>
-            <div class="cardT">A diagnosis you can forward internally.</div>
+            <div class="cardK">Promise</div>
+            <div class="cardT">Clear signal. No consulting bingo.</div>
           </div>
           <div class="card">
-            <div class="cardK">What you avoid</div>
-            <div class="cardT">Accuracy theater and “it depends” meetings.</div>
+            <div class="cardK">Warning</div>
+            <div class="cardT">“It depends” is not an answer choice.</div>
           </div>
           <div class="card">
-            <div class="cardK">What I’m selling</div>
-            <div class="cardT">A 10‑minute call that saves you 10 weeks.</div>
+            <div class="cardK">Outcome</div>
+            <div class="cardT">A path to mature your setup and unlock ROI.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- QUESTIONS (minimal, Cuberto-ish blocks) -->
-    <section class="panel q" data-panel="q1" data-q="q1">
+    <section class="panel q" data-panel="q1">
       <div class="content">
-        <div class="eyebrow">Question 1</div>
-        <h2>Why are you building an agent right now?</h2>
-        <p class="lead">Pick the closest truth. The UI won’t judge. (It will.)</p>
+        <div class="eyebrow">1/5 • Intent</div>
+        <h2>What actually triggered this agent?</h2>
 
         <div class="choices">
-          <button class="choice" data-q="q1" data-a="pressure">
-            <span class="cTitle">Leadership pressure</span>
-            <span class="cSub">“We need something agentic… by Monday.”</span>
+          <button class="choice" data-q="q1" data-a="useCase">
+            <span class="cTitle">A clear, repeatable use case</span>
+            <span class="cSub">The boring kind that prints money.</span>
           </button>
-          <button class="choice" data-q="q1" data-a="efficiency">
-            <span class="cTitle">Efficiency</span>
-            <span class="cSub">Less manual work. More throughput. Less pain.</span>
+          <button class="choice" data-q="q1" data-a="workflowBreak">
+            <span class="cTitle">A workflow was breaking</span>
+            <span class="cSub">We tried “more meetings.” Didn’t work.</span>
           </button>
-          <button class="choice" data-q="q1" data-a="cx">
-            <span class="cTitle">Customer experience</span>
-            <span class="cSub">Faster answers without the support bonfire.</span>
+          <button class="choice" data-q="q1" data-a="leadership">
+            <span class="cTitle">Leadership asked for “something AI”</span>
+            <span class="cSub">Ah yes, the ancient prophecy.</span>
           </button>
-          <button class="choice" data-q="q1" data-a="fear">
-            <span class="cTitle">Competitive fear</span>
-            <span class="cSub">If we don’t, someone else will… loudly.</span>
+          <button class="choice" data-q="q1" data-a="experiment">
+            <span class="cTitle">Experimentation</span>
+            <span class="cSub">We’re vibing and hoping for enlightenment.</span>
           </button>
         </div>
       </div>
-      <div class="ghostline" aria-hidden="true">Keep it simple. Make it safe. Ship it.</div>
+      <div class="ghostline" aria-hidden="true">Intent first. Then the architecture stops crying.</div>
     </section>
 
-    <section class="panel q" data-panel="q2" data-q="q2">
+    <section class="panel q" data-panel="q2">
       <div class="content">
-        <div class="eyebrow">Question 2</div>
-        <h2>What happens when the agent is missing data?</h2>
-        <p class="lead">The model will either ask… or improvise. Choose wisely.</p>
+        <div class="eyebrow">2/5 • Validation</div>
+        <h2>How do you know the output is acceptable?</h2>
 
         <div class="choices">
-          <button class="choice" data-q="q2" data-a="failClosed">
-            <span class="cTitle">It stops</span>
-            <span class="cSub">Fail‑closed. No guesses. No chaos.</span>
+          <button class="choice" data-q="q2" data-a="outcome">
+            <span class="cTitle">Outcome-based criteria</span>
+            <span class="cSub">Defined “good” that survives a CFO.</span>
           </button>
-          <button class="choice" data-q="q2" data-a="clarify">
-            <span class="cTitle">It asks</span>
-            <span class="cSub">“I need X to answer.” Like a sane coworker.</span>
+          <button class="choice" data-q="q2" data-a="human">
+            <span class="cTitle">Humans approve what matters</span>
+            <span class="cSub">We kept adults in the loop.</span>
           </button>
-          <button class="choice" data-q="q2" data-a="escalate">
-            <span class="cTitle">It escalates</span>
-            <span class="cSub">Routes to a human when it’s uncertain.</span>
+          <button class="choice" data-q="q2" data-a="spot">
+            <span class="cTitle">Spot checks</span>
+            <span class="cSub">A few examples and a deep breath.</span>
           </button>
-          <button class="choice" data-q="q2" data-a="guess">
-            <span class="cTitle">It guesses</span>
-            <span class="cSub">Confidently. Passionately. Incorrectly.</span>
+          <button class="choice" data-q="q2" data-a="vibes">
+            <span class="cTitle">Vibes</span>
+            <span class="cSub">It sounded confident. Like a politician.</span>
           </button>
         </div>
       </div>
-      <div class="ghostline" aria-hidden="true">Confidence ≠ safety.</div>
+      <div class="ghostline" aria-hidden="true">Confidence ≠ correctness. It’s just… confidence.</div>
     </section>
 
-    <section class="panel q" data-panel="q3" data-q="q3">
+    <section class="panel q" data-panel="q3">
       <div class="content">
-        <div class="eyebrow">Question 3</div>
-        <h2>How do you decide the agent is “accurate”?</h2>
-        <p class="lead">If your answer is “it felt right,” we should talk.</p>
+        <div class="eyebrow">3/5 • Complexity</div>
+        <h2>How is the work divided behind the scenes?</h2>
 
         <div class="choices">
-          <button class="choice" data-q="q3" data-a="vibes">
-            <span class="cTitle">Vibes & spot checks</span>
-            <span class="cSub">A demo, some QA, a prayer.</span>
+          <button class="choice" data-q="q3" data-a="adaptiveRoles">
+            <span class="cTitle">Multi-agent roles that adapt</span>
+            <span class="cSub">Different situations, different specialists.</span>
           </button>
-          <button class="choice" data-q="q3" data-a="rules">
-            <span class="cTitle">Business rules</span>
-            <span class="cSub">Risk tiers + thresholds + policy gating.</span>
+          <button class="choice" data-q="q3" data-a="roles">
+            <span class="cTitle">Multi-agent with defined roles</span>
+            <span class="cSub">Less chaos. More delegation.</span>
           </button>
-          <button class="choice" data-q="q3" data-a="humanLoop">
-            <span class="cTitle">Human-in-the-loop</span>
-            <span class="cSub">It drafts; humans approve anything important.</span>
+          <button class="choice" data-q="q3" data-a="oneAgentTools">
+            <span class="cTitle">One agent with lots of tools</span>
+            <span class="cSub">A Swiss Army knife with anxiety.</span>
           </button>
-          <button class="choice" data-q="q3" data-a="evals">
-            <span class="cTitle">Evals + telemetry</span>
-            <span class="cSub">We measure, trace, and iterate like adults.</span>
+          <button class="choice" data-q="q3" data-a="onePrompt">
+            <span class="cTitle">One prompt does everything</span>
+            <span class="cSub">What could possibly go wrong?</span>
           </button>
         </div>
       </div>
-      <div class="ghostline" aria-hidden="true">Accuracy without context is theater.</div>
+      <div class="ghostline" aria-hidden="true">If one brain does everything, it becomes the bottleneck.</div>
     </section>
 
-    <section class="panel q" data-panel="q4" data-q="q4">
+    <section class="panel q" data-panel="q4">
       <div class="content">
-        <div class="eyebrow">Question 4</div>
-        <h2>Where does the agent get “truth” from?</h2>
-        <p class="lead">If it can’t see reality, it will invent a beautiful one.</p>
+        <div class="eyebrow">4/5 • ROI</div>
+        <h2>How do you know it creates real value?</h2>
 
         <div class="choices">
-          <button class="choice" data-q="q4" data-a="promptOnly">
-            <span class="cTitle">Prompt only</span>
-            <span class="cSub">Mostly instructions. Minimal real data.</span>
+          <button class="choice" data-q="q4" data-a="triple">
+            <span class="cTitle">We track cost + adoption + outcomes</span>
+            <span class="cSub">Numbers. Not feelings.</span>
           </button>
-          <button class="choice" data-q="q4" data-a="rag">
-            <span class="cTitle">RAG over docs</span>
-            <span class="cSub">KBs, tickets, PDFs… hopefully updated.</span>
+          <button class="choice" data-q="q4" data-a="adoptionOnly">
+            <span class="cTitle">Usage/adoption is strong</span>
+            <span class="cSub">People like it. ROI TBD.</span>
           </button>
-          <button class="choice" data-q="q4" data-a="structured">
-            <span class="cTitle">Structured business data</span>
-            <span class="cSub">Entities, states, policies, and constraints.</span>
+          <button class="choice" data-q="q4" data-a="feelsFaster">
+            <span class="cTitle">It feels faster</span>
+            <span class="cSub">Speed vibes. Very scientific.</span>
           </button>
-          <button class="choice" data-q="q4" data-a="tools">
-            <span class="cTitle">Tools + systems</span>
-            <span class="cSub">Validate + execute workflows, not just talk.</span>
+          <button class="choice" data-q="q4" data-a="unknown">
+            <span class="cTitle">We haven’t measured</span>
+            <span class="cSub">We prefer surprise as a strategy.</span>
           </button>
         </div>
       </div>
-      <div class="ghostline" aria-hidden="true">Give it reality. Then give it permission.</div>
+      <div class="ghostline" aria-hidden="true">ROI is where demos go to be judged.</div>
     </section>
 
-    <!-- RESULT + CTA -->
+    <section class="panel q" data-panel="q5">
+      <div class="content">
+        <div class="eyebrow">5/5 • Scale</div>
+        <h2>If this succeeds, what happens next?</h2>
+
+        <div class="choices">
+          <button class="choice" data-q="q5" data-a="framework">
+            <span class="cTitle">We extend a shared framework</span>
+            <span class="cSub">Reusable patterns + observability baked in.</span>
+          </button>
+          <button class="choice" data-q="q5" data-a="copyPaste">
+            <span class="cTitle">Copy-paste and tweak</span>
+            <span class="cSub">A classic method. Like duct tape.</span>
+          </button>
+          <button class="choice" data-q="q5" data-a="rebuild">
+            <span class="cTitle">Rebuild from scratch</span>
+            <span class="cSub">We love pain. We’re consistent.</span>
+          </button>
+          <button class="choice" data-q="q5" data-a="shrug">
+            <span class="cTitle">We haven’t thought about scale</span>
+            <span class="cSub">Future us can cry later.</span>
+          </button>
+        </div>
+      </div>
+      <div class="ghostline" aria-hidden="true">If it can’t scale, it’s a hobby.</div>
+    </section>
+
     <section class="panel result" data-panel="result" id="resultPanel">
       <div class="content">
         <div class="eyebrow">Your snapshot</div>
-        <h2 id="resultTitle">You’re… loading.</h2>
-        <p class="lead" id="resultSub">Answer the questions above to get a clean recommendation.</p>
+        <h2 id="resultTitle">Finish the 5 clicks.</h2>
+        <p class="lead" id="resultSub">Then you’ll get a maturity snapshot + the cleanest next move.</p>
 
         <div class="pillRow" id="pillRow"></div>
 
         <div class="resultCard">
-          <div class="rcK">The move</div>
-          <div class="rcT" id="resultMove"></div>
+          <div class="rcK">Next move</div>
+          <div class="rcT" id="resultMove">Your agent can’t mature on vibes alone. (It can try. It will fail.)</div>
         </div>
 
         <div class="row">
           <a class="btn primary" id="book" href="https://tidycal.com/jasonfishbein/briefchat" target="_blank" rel="noopener noreferrer">
             Book a brief chat <span class="arr" aria-hidden="true">→</span>
           </a>
-          <button class="btn ghost" id="copy">Copy a sharable link</button>
+          <button class="btn ghost" id="copy">Copy sharable link</button>
           <button class="btn ghost" id="restart">Restart</button>
         </div>
 
         <div class="tiny">
-          You’ll get my email after you book. Because that’s how calendars work. 🙂
+          On the call: we mature your system and unlock more value. No decks. No therapy. Just fixes.
         </div>
       </div>
 
-      <div class="aside">
+      <div class="aside" aria-hidden="true">
         <div class="callout">
-          <div class="callK">What happens on the call</div>
+          <div class="callK">What I’ll do in 10 minutes</div>
           <ul>
-            <li>We map your agent to a simple risk ladder</li>
-            <li>We identify the single missing “trust component”</li>
-            <li>You leave with a first fix you can ship this week</li>
-          </ul>
-        </div>
-        <div class="callout">
-          <div class="callK">What does not happen</div>
-          <ul>
-            <li>No sales monologue</li>
-            <li>No 47-slide deck</li>
-            <li>No “just fine-tune it” coping strategy</li>
+            <li>Translate your answers into a simple maturity ladder</li>
+            <li>Tell you what to fix first (and what to stop debating)</li>
+            <li>Show how to scale from 1 agent to many without chaos</li>
           </ul>
         </div>
       </div>
     </section>
 
     <footer class="foot">
-      <div>GitHub Pages • One file flow • No tracking</div>
+      <div>GitHub Pages • One-page walkthrough • No tracking</div>
       <div>© <span id="year"></span> Jason Fishbein</div>
     </footer>
   </main>
