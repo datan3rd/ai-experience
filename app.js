@@ -127,58 +127,80 @@ function restart(){
   updateResult();
   scrollToPanel("hero");
 }
-function wire(){
-  $("#start").addEventListener("click", ()=>scrollToPanel("q1"));
-  $("#skipToBook").addEventListener("click", ()=>scrollToPanel("result"));
-  $("#restart").addEventListener("click", restart);
-  $("#copy").addEventListener("click", copyLink);
-  $("#book").setAttribute("href", BOOKING);
 
-  const brand = $("#toTop");
-  brand.addEventListener("click", restart);
-  brand.addEventListener("keydown", (e)=>{ if(e.key==="Enter") restart(); });
+function on(id, event, handler){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener(event, handler);
+}
+
+function wire(){
+  on("start","click", ()=>scrollToPanel("q1"));
+  // Optional buttons (may not exist in some versions)
+  on("skipToBook","click", ()=>scrollToPanel("result"));
+  on("restart","click", restart);
+  on("copy","click", copyLink);
+
+  const book = document.getElementById("book");
+  if(book) book.setAttribute("href", BOOKING);
+
+  const brand = document.getElementById("toTop");
+  if(brand){
+    brand.addEventListener("click", restart);
+    brand.addEventListener("keydown", (e)=>{ if(e.key==="Enter") restart(); });
+  }
 
   const nextMap = { q1:"q2", q2:"q3", q3:"q4", q4:"q5", q5:"result" };
-  $$(".choice").forEach(btn=>{
+  document.querySelectorAll(".choice").forEach(btn=>{
     btn.addEventListener("click", ()=>{
       const q = btn.dataset.q;
       const a = btn.dataset.a;
+      if(!q || !a) return;
       select(q, a);
       setTimeout(()=>scrollToPanel(nextMap[q] || "result"), 240);
     });
   });
 
-  const panels = $$("[data-panel]");
-  const io = new IntersectionObserver((entries)=>{
-    for(const e of entries){
-      if(e.isIntersecting){
-        const idx = panels.indexOf(e.target);
-        const pct = Math.round((idx/(panels.length-1))*100);
-        const current = parseInt(($("#pText").textContent || "0").replace("%",""), 10) || 0;
-        if(pct > current){
-          $("#fill").style.width = `${pct}%`;
-          $("#pText").textContent = `${pct}%`;
+  // Scroll-based progress (safe even if some nodes missing)
+  const panels = Array.from(document.querySelectorAll("[data-panel]"));
+  const fill = document.getElementById("fill");
+  const pText = document.getElementById("pText");
+  if(panels.length && fill && pText){
+    const io = new IntersectionObserver((entries)=>{
+      for(const e of entries){
+        if(e.isIntersecting){
+          const idx = panels.indexOf(e.target);
+          const pct = Math.round((idx/(panels.length-1))*100);
+          const current = parseInt((pText.textContent || "0").replace("%",""), 10) || 0;
+          if(pct > current){
+            fill.style.width = `${pct}%`;
+            pText.textContent = `${pct}%`;
+          }
         }
       }
-    }
-  }, { threshold: 0.55 });
-  panels.forEach(p=>io.observe(p));
+    }, { threshold: 0.55 });
+    panels.forEach(p=>io.observe(p));
+  }
 
+  // Cursor follower (optional; no-op on touch)
   const dot = document.querySelector(".cursorDot");
   const ring = document.querySelector(".cursorRing");
-  let x=0,y=0, rx=0, ry=0;
-  window.addEventListener("mousemove",(e)=>{
-    x = e.clientX; y = e.clientY;
-    dot.style.left = x+"px"; dot.style.top = y+"px";
-  });
-  function raf(){
-    rx += (x - rx) * 0.10;
-    ry += (y - ry) * 0.10;
-    ring.style.left = rx+"px"; ring.style.top = ry+"px";
-    requestAnimationFrame(raf);
+  if(dot && ring){
+    let x=0,y=0, rx=0, ry=0;
+    window.addEventListener("mousemove",(e)=>{
+      x = e.clientX; y = e.clientY;
+      dot.style.left = x+"px"; dot.style.top = y+"px";
+    });
+    function raf(){
+      rx += (x - rx) * 0.10;
+      ry += (y - ry) * 0.10;
+      ring.style.left = rx+"px"; ring.style.top = ry+"px";
+      requestAnimationFrame(raf);
+    }
+    raf();
   }
-  raf();
 }
+
 setProgressFromAnswers();
 updateResult();
 loadFromUrl();
