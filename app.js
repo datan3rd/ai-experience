@@ -79,6 +79,7 @@ function snapshotFromScore(score){
 }
 function updateResult(){
   const answered = Object.values(state.answers).filter(Boolean).length;
+  document.body.classList.toggle("incomplete", answered < 5);
   if(answered < 5){
     $("#resultTitle").textContent = "Finish the 5 clicks.";
     $("#resultSub").textContent = "Then you’ll get a maturity snapshot + the cleanest next move.";

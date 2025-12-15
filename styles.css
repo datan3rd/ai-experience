@@ -326,3 +326,60 @@ h2{
   .mesh{animation:none}
   .fill,.pill,.btn,.choice{transition:none}
 }
+
+
+/* ===== Readability + gating (added) ===== */
+
+/* Stronger readable eyebrow + body copy */
+.eyebrow{
+  color: rgba(255,255,255,0.78) !important;
+  font-weight: 650 !important;
+  letter-spacing: .20em !important;
+}
+
+/* Ensure h2/h1 separation from glass */
+h1, h2{
+  text-shadow: 0 2px 10px rgba(0,0,0,0.55) !important;
+}
+
+/* Choice cards: more opacity + crisper border */
+.choice{
+  background: rgba(10, 12, 18, 0.78) !important;
+  border-color: rgba(255,255,255,0.18) !important;
+}
+.choice:hover{
+  background: rgba(12, 14, 22, 0.86) !important;
+  border-color: rgba(255,255,255,0.26) !important;
+}
+.choice.selected{
+  border-color: rgba(120, 130, 255, 0.65) !important;
+  box-shadow: 0 0 0 2px rgba(120,130,255,0.28) !important;
+}
+
+/* Choice text: brighter + stronger weights */
+.cTitle{
+  color: rgba(255,255,255,0.96) !important;
+  font-weight: 780 !important;
+}
+.cSub{
+  color: rgba(255,255,255,0.78) !important;
+  font-weight: 520 !important;
+}
+
+/* Result panel gating: hide everything except title/subtitle until complete */
+body.incomplete .needs-complete{
+  display: none !important;
+}
+
+/* Make the result card header/subtitle readable even on dark gradients */
+#resultTitle{
+  color: rgba(255,255,255,0.98) !important;
+}
+#resultSub{
+  color: rgba(255,255,255,0.78) !important;
+}
+
+/* Optional: brighten result "NEXT MOVE" label when shown */
+.rcK{
+  color: rgba(255,255,255,0.66) !important;
+}
