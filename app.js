@@ -136,6 +136,11 @@ function on(id, event, handler){
 
 function wire(){
   on("start","click", ()=>scrollToPanel("q1"));
+  on("backBtn","click", ()=>goBack());
+  on("backBtn","click", ()=>{
+    // If we are on a question, going back should unselect the current question if you want (optional).
+    goBack();
+  });
   // Optional buttons (may not exist in some versions)
   on("skipToBook","click", ()=>scrollToPanel("result"));
   on("restart","click", restart);
