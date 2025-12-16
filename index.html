@@ -35,6 +35,7 @@
     </div>
 
     <div class="topRight">
+      <button class="pill pillBtn" id="backBtn" type="button" aria-label="Go back">← Back</button>
       <div class="progress">
         <div class="track"><div class="fill" id="fill"></div></div>
         <div class="pMeta"><span id="pText">0%</span></div>
@@ -47,7 +48,8 @@
   </header>
 
   <main class="wrap">
-    <section class="panel hero" data-panel="hero">
+<div class="deck" id="deck">
+<section class="panel hero deckCard" data-panel="hero" data-step="0">
       <div class="content">
         <div class="eyebrow">60 seconds. No email gate.</div>
         <h1>
@@ -84,8 +86,7 @@
         </div>
       </div>
     </section>
-
-    <section class="panel q" data-panel="q1">
+<section class="panel q deckCard" data-panel="q1" data-step="1">
       <div class="content">
         <div class="eyebrow">1/5 • Intent</div>
         <h2>What actually triggered this agent?</h2>
@@ -111,8 +112,7 @@
       </div>
       <div class="ghostline" aria-hidden="true">Intent first. Then the architecture stops crying.</div>
     </section>
-
-    <section class="panel q" data-panel="q2">
+<section class="panel q deckCard" data-panel="q2" data-step="2">
       <div class="content">
         <div class="eyebrow">2/5 • Validation</div>
         <h2>How do you know the output is acceptable?</h2>
@@ -138,8 +138,7 @@
       </div>
       <div class="ghostline" aria-hidden="true">Confidence ≠ correctness. It’s just… confidence.</div>
     </section>
-
-    <section class="panel q" data-panel="q3">
+<section class="panel q deckCard" data-panel="q3" data-step="3">
       <div class="content">
         <div class="eyebrow">3/5 • Complexity</div>
         <h2>How is the work divided behind the scenes?</h2>
@@ -165,8 +164,7 @@
       </div>
       <div class="ghostline" aria-hidden="true">If one brain does everything, it becomes the bottleneck.</div>
     </section>
-
-    <section class="panel q" data-panel="q4">
+<section class="panel q deckCard" data-panel="q4" data-step="4">
       <div class="content">
         <div class="eyebrow">4/5 • ROI</div>
         <h2>How do you know it creates real value?</h2>
@@ -192,8 +190,7 @@
       </div>
       <div class="ghostline" aria-hidden="true">ROI is where demos go to be judged.</div>
     </section>
-
-    <section class="panel q" data-panel="q5">
+<section class="panel q deckCard" data-panel="q5" data-step="5">
       <div class="content">
         <div class="eyebrow">5/5 • Scale</div>
         <h2>If this succeeds, what happens next?</h2>
@@ -219,8 +216,7 @@
       </div>
       <div class="ghostline" aria-hidden="true">If it can’t scale, it’s a hobby.</div>
     </section>
-
-    <section class="panel result" data-panel="result" id="resultPanel">
+<section class="panel result deckCard" data-panel="result" data-step="6" id="resultPanel">
       <div class="content">
         <div class="eyebrow">Your snapshot</div>
         <h2 id="resultTitle">Finish the 5 clicks.</h2>
@@ -255,12 +251,12 @@
         </div>
       </div>
     </section>
-
-    <footer class="foot">
+</div>
+<footer class="foot">
       <div>Build AI • Get ROI • Scale</div>
       <div>© <span id="year"></span> Jason Fishbein</div>
     </footer>
-  </main>
+</main>
 
   <script src="./app.js"></script>
 </body>
