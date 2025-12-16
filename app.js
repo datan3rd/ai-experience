@@ -204,4 +204,5 @@ function wire(){
 setProgressFromAnswers();
 updateResult();
 loadFromUrl();
+setStackZ();
 wire();
