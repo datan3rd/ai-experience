@@ -552,3 +552,32 @@ a:focus-visible {
 .welcome-card {
   flex: 1;
 }
+
+
+/* --- Refinement: Welcome cards alignment --- */
+.welcome-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.welcome-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* --- Refinement: Restart / arrow button --- */
+.restart-button,
+.progress-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+}
