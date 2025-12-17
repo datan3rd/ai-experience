@@ -3,334 +3,242 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Maturity Reality Check</title>
+  <title>AI Maturity Assessment</title>
   <meta name="description" content="Five questions. Zero fluff. A clearer path to mature your AI agent.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Progress Bar -->
+  
   <div class="progress-bar">
-    <div class="progress-fill" id="progressBar"></div>
+    <div class="progress-fill" id="progress"></div>
   </div>
 
-  <!-- Navigation Header -->
-  <header class="header">
-    <button class="nav-btn back" id="backBtn" aria-label="Previous question">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <path d="M12 4L6 10L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <nav class="nav">
+    <button class="nav-back" id="navBack" disabled>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 2L4 8L10 14" stroke="currentColor" stroke-width="1.5"/>
       </svg>
     </button>
+    <div class="nav-step">
+      <span id="currentStep">0</span><span class="nav-divider">/</span><span>5</span>
+    </div>
+    <button class="nav-restart" id="navRestart">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M2 8a6 6 0 1110.39-4.25M12 2v3h-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </nav>
+
+  <main class="main">
     
-    <div class="step-indicator">
-      <span class="current-step" id="stepNum">0</span>
-      <span class="separator">/</span>
-      <span class="total-steps">5</span>
+    <!-- Welcome -->
+    <div class="screen active" data-screen="0">
+      <div class="container">
+        <div class="welcome">
+          <p class="label">Assessment</p>
+          <h1 class="welcome-title">Your AI agent doesn't need to be <em>smarter</em></h1>
+          <p class="welcome-text">It needs to deliver value. Five questions to understand your maturity level and identify your next move.</p>
+          
+          <div class="welcome-grid">
+            <div class="welcome-card">
+              <div class="welcome-card-icon">✓</div>
+              <p><strong>Promise</strong><br>Clear signal, no hype</p>
+            </div>
+            <div class="welcome-card">
+              <div class="welcome-card-icon">!</div>
+              <p><strong>Warning</strong><br>"It depends" isn't an option</p>
+            </div>
+            <div class="welcome-card">
+              <div class="welcome-card-icon">→</div>
+              <p><strong>Outcome</strong><br>Path to mature AI</p>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="start">Begin Assessment</button>
+        </div>
+      </div>
     </div>
 
-    <button class="nav-btn restart" id="restartBtn" aria-label="Restart assessment">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <path d="M17 10C17 13.866 13.866 17 10 17C6.134 17 3 13.866 3 10C3 6.134 6.134 3 10 3C11.657 3 13.187 3.586 14.4 4.571" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path d="M13 1V5H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-  </header>
-
-  <!-- Main Content Container -->
-  <main class="container">
-    
-    <!-- Welcome Screen -->
-    <section class="screen active" data-step="0" id="welcome">
-      <div class="screen-content">
-        <div class="eyebrow">60 seconds · No email gate</div>
-        
-        <h1 class="hero-title">
-          Your AI agent doesn't need to be <span class="highlight">"smarter"</span>
-        </h1>
-        
-        <p class="subtitle">
-          It needs to provide value. Answer five questions to get a maturity snapshot + the next move to squeeze more ROI out of your agent.
-        </p>
-
-        <div class="welcome-cards">
-          <div class="info-card">
-            <div class="card-icon">✓</div>
-            <div class="card-label">Promise</div>
-            <div class="card-text">Clear signal. No marketing hype.</div>
-          </div>
-          <div class="info-card">
-            <div class="card-icon">⚠</div>
-            <div class="card-label">Warning</div>
-            <div class="card-text">"It depends" is not an answer choice.</div>
-          </div>
-          <div class="info-card">
-            <div class="card-icon">→</div>
-            <div class="card-label">Outcome</div>
-            <div class="card-text">A path to more mature AI and ROI.</div>
-          </div>
-        </div>
-
-        <button class="btn-primary" id="startBtn">
-          Begin Assessment
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-    </section>
-
-    <!-- Question 1: Intent -->
-    <section class="screen" data-step="1" id="q1">
-      <div class="screen-content">
-        <div class="eyebrow">1 of 5 · Intent</div>
+    <!-- Q1 -->
+    <div class="screen" data-screen="1">
+      <div class="container">
+        <p class="label">Question 1 of 5 · Intent</p>
         <h2 class="question-title">What actually triggered this agent?</h2>
         
         <div class="options">
-          <button class="option-card" data-q="q1" data-a="useCase">
-            <div class="option-content">
-              <div class="option-title">A clear, repeatable use case</div>
-              <div class="option-subtitle">The boring kind that prints money.</div>
-            </div>
+          <button class="option" data-q="q1" data-a="useCase">
+            <div class="option-main">A clear, repeatable use case</div>
+            <div class="option-sub">The boring kind that prints money.</div>
           </button>
-          
-          <button class="option-card" data-q="q1" data-a="workflowBreak">
-            <div class="option-content">
-              <div class="option-title">A workflow was breaking</div>
-              <div class="option-subtitle">We tried "more meetings." Didn't work.</div>
-            </div>
+          <button class="option" data-q="q1" data-a="workflowBreak">
+            <div class="option-main">A workflow was breaking</div>
+            <div class="option-sub">We tried "more meetings." Didn't work.</div>
           </button>
-          
-          <button class="option-card" data-q="q1" data-a="leadership">
-            <div class="option-content">
-              <div class="option-title">Leadership asked for "something AI"</div>
-              <div class="option-subtitle">Ah yes, the ancient prophecy.</div>
-            </div>
+          <button class="option" data-q="q1" data-a="leadership">
+            <div class="option-main">Leadership asked for "something AI"</div>
+            <div class="option-sub">Ah yes, the ancient prophecy.</div>
           </button>
-          
-          <button class="option-card" data-q="q1" data-a="experiment">
-            <div class="option-content">
-              <div class="option-title">Experimentation</div>
-              <div class="option-subtitle">We're vibing and hoping for enlightenment.</div>
-            </div>
+          <button class="option" data-q="q1" data-a="experiment">
+            <div class="option-main">Experimentation</div>
+            <div class="option-sub">We're vibing and hoping for enlightenment.</div>
           </button>
         </div>
 
-        <div class="insight">Intent first. Then the architecture stops crying.</div>
+        <p class="insight">Intent first. Then the architecture stops crying.</p>
       </div>
-    </section>
+    </div>
 
-    <!-- Question 2: Validation -->
-    <section class="screen" data-step="2" id="q2">
-      <div class="screen-content">
-        <div class="eyebrow">2 of 5 · Validation</div>
+    <!-- Q2 -->
+    <div class="screen" data-screen="2">
+      <div class="container">
+        <p class="label">Question 2 of 5 · Validation</p>
         <h2 class="question-title">How do you know the output is acceptable?</h2>
         
         <div class="options">
-          <button class="option-card" data-q="q2" data-a="outcome">
-            <div class="option-content">
-              <div class="option-title">Outcome-based criteria</div>
-              <div class="option-subtitle">Defined "good" that survives a CFO.</div>
-            </div>
+          <button class="option" data-q="q2" data-a="outcome">
+            <div class="option-main">Outcome-based criteria</div>
+            <div class="option-sub">Defined "good" that survives a CFO.</div>
           </button>
-          
-          <button class="option-card" data-q="q2" data-a="human">
-            <div class="option-content">
-              <div class="option-title">Humans approve what matters</div>
-              <div class="option-subtitle">We kept adults in the loop.</div>
-            </div>
+          <button class="option" data-q="q2" data-a="human">
+            <div class="option-main">Humans approve what matters</div>
+            <div class="option-sub">We kept adults in the loop.</div>
           </button>
-          
-          <button class="option-card" data-q="q2" data-a="spot">
-            <div class="option-content">
-              <div class="option-title">Spot checks</div>
-              <div class="option-subtitle">A few examples and a deep breath.</div>
-            </div>
+          <button class="option" data-q="q2" data-a="spot">
+            <div class="option-main">Spot checks</div>
+            <div class="option-sub">A few examples and a deep breath.</div>
           </button>
-          
-          <button class="option-card" data-q="q2" data-a="vibes">
-            <div class="option-content">
-              <div class="option-title">Vibes</div>
-              <div class="option-subtitle">It sounded confident. Like a politician.</div>
-            </div>
+          <button class="option" data-q="q2" data-a="vibes">
+            <div class="option-main">Vibes</div>
+            <div class="option-sub">It sounded confident. Like a politician.</div>
           </button>
         </div>
 
-        <div class="insight">Confidence ≠ correctness. It's just… confidence.</div>
+        <p class="insight">Confidence ≠ correctness. It's just… confidence.</p>
       </div>
-    </section>
+    </div>
 
-    <!-- Question 3: Complexity -->
-    <section class="screen" data-step="3" id="q3">
-      <div class="screen-content">
-        <div class="eyebrow">3 of 5 · Complexity</div>
+    <!-- Q3 -->
+    <div class="screen" data-screen="3">
+      <div class="container">
+        <p class="label">Question 3 of 5 · Complexity</p>
         <h2 class="question-title">How is the work divided behind the scenes?</h2>
         
         <div class="options">
-          <button class="option-card" data-q="q3" data-a="adaptiveRoles">
-            <div class="option-content">
-              <div class="option-title">Multi-agent roles that adapt</div>
-              <div class="option-subtitle">Different situations, different specialists.</div>
-            </div>
+          <button class="option" data-q="q3" data-a="adaptiveRoles">
+            <div class="option-main">Multi-agent roles that adapt</div>
+            <div class="option-sub">Different situations, different specialists.</div>
           </button>
-          
-          <button class="option-card" data-q="q3" data-a="roles">
-            <div class="option-content">
-              <div class="option-title">Multi-agent with defined roles</div>
-              <div class="option-subtitle">Less chaos. More delegation.</div>
-            </div>
+          <button class="option" data-q="q3" data-a="roles">
+            <div class="option-main">Multi-agent with defined roles</div>
+            <div class="option-sub">Less chaos. More delegation.</div>
           </button>
-          
-          <button class="option-card" data-q="q3" data-a="oneAgentTools">
-            <div class="option-content">
-              <div class="option-title">One agent with lots of tools</div>
-              <div class="option-subtitle">A Swiss Army knife with anxiety.</div>
-            </div>
+          <button class="option" data-q="q3" data-a="oneAgentTools">
+            <div class="option-main">One agent with lots of tools</div>
+            <div class="option-sub">A Swiss Army knife with anxiety.</div>
           </button>
-          
-          <button class="option-card" data-q="q3" data-a="onePrompt">
-            <div class="option-content">
-              <div class="option-title">One prompt does everything</div>
-              <div class="option-subtitle">What could possibly go wrong?</div>
-            </div>
+          <button class="option" data-q="q3" data-a="onePrompt">
+            <div class="option-main">One prompt does everything</div>
+            <div class="option-sub">What could possibly go wrong?</div>
           </button>
         </div>
 
-        <div class="insight">If one brain does everything, it becomes the bottleneck.</div>
+        <p class="insight">If one brain does everything, it becomes the bottleneck.</p>
       </div>
-    </section>
+    </div>
 
-    <!-- Question 4: ROI -->
-    <section class="screen" data-step="4" id="q4">
-      <div class="screen-content">
-        <div class="eyebrow">4 of 5 · ROI</div>
+    <!-- Q4 -->
+    <div class="screen" data-screen="4">
+      <div class="container">
+        <p class="label">Question 4 of 5 · ROI</p>
         <h2 class="question-title">How do you know it creates real value?</h2>
         
         <div class="options">
-          <button class="option-card" data-q="q4" data-a="triple">
-            <div class="option-content">
-              <div class="option-title">We track cost + adoption + outcomes</div>
-              <div class="option-subtitle">Numbers. Not feelings.</div>
-            </div>
+          <button class="option" data-q="q4" data-a="triple">
+            <div class="option-main">We track cost + adoption + outcomes</div>
+            <div class="option-sub">Numbers. Not feelings.</div>
           </button>
-          
-          <button class="option-card" data-q="q4" data-a="adoptionOnly">
-            <div class="option-content">
-              <div class="option-title">Usage/adoption is strong</div>
-              <div class="option-subtitle">People like it. ROI TBD.</div>
-            </div>
+          <button class="option" data-q="q4" data-a="adoptionOnly">
+            <div class="option-main">Usage/adoption is strong</div>
+            <div class="option-sub">People like it. ROI TBD.</div>
           </button>
-          
-          <button class="option-card" data-q="q4" data-a="feelsFaster">
-            <div class="option-content">
-              <div class="option-title">It feels faster</div>
-              <div class="option-subtitle">Speed vibes. Very scientific.</div>
-            </div>
+          <button class="option" data-q="q4" data-a="feelsFaster">
+            <div class="option-main">It feels faster</div>
+            <div class="option-sub">Speed vibes. Very scientific.</div>
           </button>
-          
-          <button class="option-card" data-q="q4" data-a="unknown">
-            <div class="option-content">
-              <div class="option-title">We haven't measured</div>
-              <div class="option-subtitle">We prefer surprise as a strategy.</div>
-            </div>
+          <button class="option" data-q="q4" data-a="unknown">
+            <div class="option-main">We haven't measured</div>
+            <div class="option-sub">We prefer surprise as a strategy.</div>
           </button>
         </div>
 
-        <div class="insight">ROI is where demos go to be judged.</div>
+        <p class="insight">ROI is where demos go to be judged.</p>
       </div>
-    </section>
+    </div>
 
-    <!-- Question 5: Scale -->
-    <section class="screen" data-step="5" id="q5">
-      <div class="screen-content">
-        <div class="eyebrow">5 of 5 · Scale</div>
+    <!-- Q5 -->
+    <div class="screen" data-screen="5">
+      <div class="container">
+        <p class="label">Question 5 of 5 · Scale</p>
         <h2 class="question-title">If this succeeds, what happens next?</h2>
         
         <div class="options">
-          <button class="option-card" data-q="q5" data-a="framework">
-            <div class="option-content">
-              <div class="option-title">We extend a shared framework</div>
-              <div class="option-subtitle">Reusable patterns + observability baked in.</div>
-            </div>
+          <button class="option" data-q="q5" data-a="framework">
+            <div class="option-main">We extend a shared framework</div>
+            <div class="option-sub">Reusable patterns + observability baked in.</div>
           </button>
-          
-          <button class="option-card" data-q="q5" data-a="copyPaste">
-            <div class="option-content">
-              <div class="option-title">Copy-paste and tweak</div>
-              <div class="option-subtitle">A classic method. Like duct tape.</div>
-            </div>
+          <button class="option" data-q="q5" data-a="copyPaste">
+            <div class="option-main">Copy-paste and tweak</div>
+            <div class="option-sub">A classic method. Like duct tape.</div>
           </button>
-          
-          <button class="option-card" data-q="q5" data-a="rebuild">
-            <div class="option-content">
-              <div class="option-title">Rebuild from scratch</div>
-              <div class="option-subtitle">We love pain. We're consistent.</div>
-            </div>
+          <button class="option" data-q="q5" data-a="rebuild">
+            <div class="option-main">Rebuild from scratch</div>
+            <div class="option-sub">We love pain. We're consistent.</div>
           </button>
-          
-          <button class="option-card" data-q="q5" data-a="shrug">
-            <div class="option-content">
-              <div class="option-title">We haven't thought about scale</div>
-              <div class="option-subtitle">Future us can cry later.</div>
-            </div>
+          <button class="option" data-q="q5" data-a="shrug">
+            <div class="option-main">We haven't thought about scale</div>
+            <div class="option-sub">Future us can cry later.</div>
           </button>
         </div>
 
-        <div class="insight">If it can't scale, it's a hobby.</div>
+        <p class="insight">If it can't scale, it's a hobby.</p>
       </div>
-    </section>
+    </div>
 
-    <!-- Results Screen -->
-    <section class="screen" data-step="6" id="results">
-      <div class="screen-content results-content">
-        <div class="eyebrow">Your Snapshot</div>
-        
-        <h2 class="result-title" id="resultTitle">Demo Gremlins</h2>
-        <p class="result-subtitle" id="resultSubtitle">You're one impressive demo away from a spectacular postmortem.</p>
-        
-        <div class="result-tags" id="resultTags">
-          <span class="tag">High vibes</span>
-          <span class="tag">Low governance</span>
-          <span class="tag">Surprise incidents</span>
-        </div>
+    <!-- Results -->
+    <div class="screen" data-screen="6">
+      <div class="container">
+        <div class="results">
+          <p class="label">Your Snapshot</p>
+          <h2 class="results-title" id="resultTitle">Demo Gremlins</h2>
+          <p class="results-subtitle" id="resultSubtitle">You're one impressive demo away from a spectacular postmortem.</p>
+          
+          <div class="tags" id="resultTags"></div>
 
-        <div class="result-card">
-          <div class="result-card-header">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2"/>
-            </svg>
-            <span>Next Move</span>
+          <div class="result-box">
+            <div class="result-box-label">Next Move</div>
+            <div class="result-box-content" id="resultMove"></div>
           </div>
-          <div class="result-card-body" id="resultMove">
-            Next move: define <strong>outcome acceptance criteria</strong> + a simple <strong>handoff rule</strong> (do / draft / escalate). You'll get stability fast and fewer Slack fires.
+
+          <div class="result-actions">
+            <a class="btn-primary" href="https://tidycal.com/jasonfishbein/briefchat" target="_blank">Let's Talk</a>
+            <button class="btn-secondary" id="restart">Start Over</button>
           </div>
-        </div>
 
-        <div class="result-actions">
-          <a class="btn-primary" href="https://tidycal.com/jasonfishbein/briefchat" target="_blank" rel="noopener">
-            Let's Talk to Mature Your AI
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </a>
-          <button class="btn-secondary" id="restartFromResults">Restart Assessment</button>
-        </div>
-
-        <div class="result-note">
-          On the call: we'll plan to mature your AI and unlock more value. No decks. No therapy. Just strategy.
+          <p class="result-note">15 minute call to plan your next step. No pitch deck.</p>
         </div>
       </div>
-    </section>
+    </div>
 
   </main>
 
-  <!-- Footer -->
   <footer class="footer">
-    <div>Build AI · Get ROI · Scale</div>
-    <div>© <span id="year"></span> Jason Fishbein</div>
+    <p>Build AI · Get ROI · Scale</p>
+    <p>© <span id="year"></span> Jason Fishbein</p>
   </footer>
 
   <script src="app.js"></script>
