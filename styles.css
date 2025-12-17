@@ -224,11 +224,21 @@ body {
 /* Welcome Grid */
 .welcome-grid {
   display: grid;
-  gap: 12px;
+  grid-template-columns: repeat(3, minmax(220px, 260px));
+  justify-content: center;
+  gap: 16px;
   margin-bottom: 40px;
 }
 
+@media (max-width: 860px) {
+  .welcome-grid {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+}
+
 .welcome-card {
+  min-height: 96px;
   display: flex;
   align-items: flex-start;
   gap: 16px;
